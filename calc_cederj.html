@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora CEDERJ</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+  <div class="container py-5">
+    <div class="card shadow-lg">
+      <div class="card-header bg-primary text-white">
+        <h3 class="mb-0">Calculadora de Notas - CEDERJ</h3>
+      </div>
+      <div class="card-body">
+
+        <form id="formNotas">
+          <h5 class="text-secondary">📘 Primeiro Bimestre</h5>
+          <div class="row mb-3">
+            <div class="col">
+              <label for="ad1" class="form-label">AD1:</label>
+              <input type="number" class="form-control" id="ad1" min="0" max="10" step="0.1">
+            </div>
+            <div class="col">
+              <label for="ap1" class="form-label">AP1:</label>
+              <input type="number" class="form-control" id="ap1" min="0" max="10" step="0.1">
+            </div>
+          </div>
+
+          <h5 class="text-secondary">📗 Segundo Bimestre</h5>
+          <div class="row mb-3">
+            <div class="col">
+              <label for="ad2" class="form-label">AD2:</label>
+              <input type="number" class="form-control" id="ad2" min="0" max="10" step="0.1">
+            </div>
+            <div class="col">
+              <label for="ap2" class="form-label">AP2:</label>
+              <input type="number" class="form-control" id="ap2" min="0" max="10" step="0.1">
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="ap3" class="form-label">AP3 (deixe em branco se não fez):</label>
+            <input type="number" class="form-control" id="ap3" min="0" max="10" step="0.1">
+          </div>
+
+          <button type="button" class="btn btn-success" onclick="calcular()">Calcular</button>
+        </form>
+
+        <div class="mt-4">
+          <h5>Resultado:</h5>
+          <div id="resultado" class="alert alert-info"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function calcular() {
+      const ad1 = parseFloat(document.getElementById('ad1').value);
+      const ap1 = parseFloat(document.getElementById('ap1').value);
+      const ad2 = parseFloat(document.getElementById('ad2').value);
+      const ap2 = parseFloat(document.getElementById('ap2').value);
+      const ap3 = parseFloat(document.getElementById('ap3').value);
+
+      let resultado = "";
+      let n1 = null;
+      let n2 = null;
+
+      if (!isNaN(ad1) && !isNaN(ap1)) {
+        n1 = 0.2 * ad1 + 0.8 * ap1;
+        resultado += `📘 N1 = ${n1.toFixed(2)}<br>`;
+      } else if (!isNaN(ad1) && isNaN(ap1) && isNaN(ad2) && isNaN(ap2)) {
+        const ap1_necessario = (6 - 0.2 * ad1) / 0.8;
+        if (ap1_necessario > 10) {
+          resultado += `📘 Com AD1 = ${ad1}, você <span class="text-danger">não consegue atingir N1 = 6</span> mesmo tirando 10 na AP1.<br>`;
+        } else {
+          resultado += `📘 Com AD1 = ${ad1}, você precisa tirar <strong>${ap1_necessario.toFixed(2)}</strong> na AP1 para N1 = 6 e evitar AP3.<br>`;
+        }
+      }
+
+      if (!isNaN(ad2) && !isNaN(ap2)) {
+        n2 = 0.2 * ad2 + 0.8 * ap2;
+        resultado += `📗 N2 = ${n2.toFixed(2)}<br>`;
+      } else if (!isNaN(ad2) && isNaN(ap2) && isNaN(ad1) && isNaN(ap1)) {
+        const ap2_necessario = (6 - 0.2 * ad2) / 0.8;
+        if (ap2_necessario > 10) {
+          resultado += `📗 Com AD2 = ${ad2}, você <span class="text-danger">não consegue atingir N2 = 6</span> mesmo tirando 10 na AP2.<br>`;
+        } else {
+          resultado += `📗 Com AD2 = ${ad2}, você precisa tirar <strong>${ap2_necessario.toFixed(2)}</strong> na AP2 para N2 = 6 e evitar AP3.<br>`;
+        }
+      }
+
+      if (n1 !== null && n2 !== null) {
+        const nf = (n1 + n2) / 2;
+        resultado += `📊 Nota Final (N) = <strong>${nf.toFixed(2)}</strong><br>`;
+
+        if (nf >= 6) {
+          resultado += "<span class='text-success'>✅ Aprovado direto!</span>";
+        } else if (!isNaN(ap3)) {
+          const melhor = Math.max(n1, n2);
+          const mediaAp3 = (ap3 + melhor) / 2;
+          resultado += `📎 AP3 = ${ap3.toFixed(2)} | Média com AP3 = <strong>${mediaAp3.toFixed(2)}</strong><br>`;
+          if (mediaAp3 >= 5) {
+            resultado += "<span class='text-success'>✅ Aprovado na AP3!</span>";
+          } else {
+            resultado += "<span class='text-danger'>❌ Reprovado, mesmo com AP3.</span>";
+          }
+        } else {
+          resultado += "<span class='text-warning'>⚠️ Nota abaixo de 6. Faça AP3.</span>";
+        }
+      } else if (n1 !== null && !isNaN(ad2) && isNaN(ap2)) {
+        const n2_necessario = 12 - n1;
+        const ap2_necessario = (n2_necessario - 0.2 * ad2) / 0.8;
+        if (ap2_necessario > 10) {
+          resultado += `📗 Para atingir média final 6, mesmo tirando 10 na AP2 não será suficiente.<br>`;
+        } else {
+          resultado += `📗 Para atingir média final 6, você precisa tirar <strong>${ap2_necessario.toFixed(2)}</strong> na AP2.<br>`;
+        }
+      } else if (n2 !== null && !isNaN(ad1) && isNaN(ap1)) {
+        const n1_necessario = 12 - n2;
+        const ap1_necessario = (n1_necessario - 0.2 * ad1) / 0.8;
+        if (ap1_necessario > 10) {
+          resultado += `📘 Para atingir média final 6, mesmo tirando 10 na AP1 não será suficiente.<br>`;
+        } else {
+          resultado += `📘 Para atingir média final 6, você precisa tirar <strong>${ap1_necessario.toFixed(2)}</strong> na AP1.<br>`;
+        }
+      }
+
+      document.getElementById("resultado").innerHTML = resultado;
+    }
+  </script>
+
+</body>
+</html>

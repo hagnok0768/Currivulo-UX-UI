@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rotina Samurai da Longevidade</title>
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(120deg, #ece9e6 0%, #ffffff 100%);
+      font-family: 'Roboto', sans-serif;
+      color: #222;
+      margin: 0; padding: 0;
+    }
+    header {
+      padding: 2rem 0 1rem 0;
+      text-align: center;
+      font-family: 'Oxanium', monospace;
+      font-size: 2rem;
+      letter-spacing: 2px;
+      color: #2b3a2b;
+    }
+    .slogan {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #647060;
+      margin-bottom: 2rem;
+      font-family: 'Oxanium', monospace;
+    }
+    .planner {
+      max-width: 900px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 1rem;
+      background: #f5f5f5;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(50,50,70,0.12);
+      padding: 1.5rem;
+    }
+    .day {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1rem 0.5rem 0.5rem 0.5rem;
+      min-height: 340px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(60,60,70,0.08);
+      border-left: 4px solid #bfa245;
+    }
+    .day-title {
+      font-family: 'Oxanium', monospace;
+      font-size: 1.1rem;
+      color: #bfa245;
+      margin-bottom: 0.7rem;
+      letter-spacing: 1px;
+      font-weight: bold;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      font-size: 1rem;
+    }
+    li {
+      padding: 0.3rem 0;
+      border-bottom: 1px dashed #ece0c7;
+      margin-bottom: 0.1rem;
+      font-weight: 400;
+    }
+    .highlight {
+      color: #c14a09;
+      font-weight: bold;
+      font-family: 'Oxanium', monospace;
+    }
+    .zen-quote {
+      text-align: center;
+      margin: 1.6rem 0 0.2rem 0;
+      color: #a6a684;
+      font-style: italic;
+      font-size: 0.98rem;
+      font-family: 'Oxanium', monospace;
+      letter-spacing: 1px;
+    }
+    @media (max-width: 900px) {
+      .planner { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .planner { grid-template-columns: 1fr; }
+      .day { min-height: 240px; }
+    }
+  </style>
+</head>
+<body>
+  <header>Rotina Samurai da Longevidade</header>
+  <div class="slogan">“Disciplina é liberdade. Dor é sabedoria. Corpo forte, mente inabalável.”</div>
+  <div class="planner">
+    <!-- Segunda -->
+    <div class="day">
+      <div class="day-title">Segunda</div>
+      <ul>
+        <li class="highlight">TREINO FULL BODY (intenso)</li>
+        <li>Quebra de jejum às 08h com proteína</li>
+        <li>Refeição limpa, low sugar</li>
+        <li>Exposição ao frio: banho gelado (3min)</li>
+        <li>Mindset estoico: 5min silêncio matinal</li>
+        <li>Sessão curta de alongamento (noite)</li>
+        <li>Sono reparador: dormir 7-8h</li>
+      </ul>
+    </div>
+    <!-- Terça -->
+    <div class="day">
+      <div class="day-title">Terça</div>
+      <ul>
+        <li>Jejum intermitente 16h (última refeição 20h/volta 12h)</li>
+        <li>Caminhada rápida ou HIIT 20min</li>
+        <li>Banho frio</li>
+        <li>Respiração Wim Hof (3 ciclos)</li>
+        <li>Zero açúcar/refinado</li>
+        <li>Desafio: 1h sem celular à noite</li>
+        <li>Leitura inspiradora</li>
+      </ul>
+    </div>
+    <!-- Quarta -->
+    <div class="day">
+      <div class="day-title">Quarta</div>
+      <ul>
+        <li class="highlight">TREINO FULL BODY</li>
+        <li>Refeição pré-treino com carbo saudável</li>
+        <li>Alongamento dinâmico pós-treino</li>
+        <li>Banho quente relaxante ou sauna (10min)</li>
+        <li>Meditação guiada 7min</li>
+        <li>Sono profundo: luzes apagadas 23h</li>
+      </ul>
+    </div>
+    <!-- Quinta -->
+    <div class="day">
+      <div class="day-title">Quinta</div>
+      <ul>
+        <li>Jejum intermitente 14-16h (flexível)</li>
+        <li>Cardio leve (bike ou caminhada 30min)</li>
+        <li>Banho frio rápido</li>
+        <li>Desafio: escreva 1 insight do dia</li>
+        <li>Frutas, vegetais e chás antioxidantes</li>
+        <li>Desconexão digital pós-21h</li>
+      </ul>
+    </div>
+    <!-- Sexta -->
+    <div class="day">
+      <div class="day-title">Sexta</div>
+      <ul>
+        <li class="highlight">TREINO FULL BODY</li>
+        <li>Priorize proteína e bons carboidratos</li>
+        <li>Banho frio/alternado pós-treino</li>
+        <li>Respiração profunda e relaxamento</li>
+        <li>Revisão semanal de progresso</li>
+        <li>Preparar plano de descanso do fim de semana</li>
+      </ul>
+    </div>
+    <!-- Sábado -->
+    <div class="day">
+      <div class="day-title">Sábado</div>
+      <ul>
+        <li>Jejum leve opcional (14h, só se sentir bem)</li>
+        <li>Caminhada na natureza</li>
+        <li>Sauna/banho quente relaxante</li>
+        <li>Almoço especial, social, prazeroso</li>
+        <li>Desafio: agradeça e celebre sua evolução</li>
+        <li>Sono livre, respeitando ciclo natural</li>
+      </ul>
+    </div>
+    <!-- Domingo -->
+    <div class="day">
+      <div class="day-title">Domingo</div>
+      <ul>
+        <li>Dia de recuperação total (mental e física)</li>
+        <li>Exposição ao sol (vitamina D)</li>
+        <li>Alimentação leve, flexível</li>
+        <li>Reflexão, propósito e visualização da semana</li>
+        <li>Tempo com pessoas queridas (ou solitude)</li>
+        <li>Sono cedo, preparando para a segunda</li>
+      </ul>
+    </div>
+  </div>
+  <div class="zen-quote">“No path to mastery is without discomfort. Samurai sharpen body, mind, and spirit.”</div>
+</body>
+</html>
