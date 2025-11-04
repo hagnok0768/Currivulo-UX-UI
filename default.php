@@ -46,14 +46,98 @@
       display: block;
     }
 
-    /* Estrelas das habilidades */
-    .stars {
-      color: #fbc02d; /* dourado */
-      font-size: 1.1rem;
-      line-height: 1;
-      white-space: nowrap;
+    /* Estrelas das habilidades (substituídas por barras elétricas) */
+    .stars { display:none; }
+    .skill-name { min-width: 80px; font-weight:600; }
+
+    /* Electric glowing bars */
+    .skill-bar { height: 14px; background: #0b1218; border-radius: 999px; padding: 3px; box-shadow: inset 0 -3px 8px rgba(0,0,0,0.7); overflow: hidden; position: relative; }
+    .skill-fill {
+      height: 100%; border-radius: 999px; width: 0%;
+      background-size: 200% 100%;
+      transition: width 900ms cubic-bezier(.2,.9,.2,1), box-shadow .18s ease, filter .18s ease;
+      box-shadow: 0 0 18px rgba(0,0,0,0.12) inset;
+      position: relative; overflow: hidden;
     }
-    .skill-name { min-width: 65px; }
+    /* animated moving energy inside the fill */
+    .skill-fill::before{
+      content: '';
+      position: absolute; left: -50%; top: 0; bottom: 0; width: 250%;
+      background: linear-gradient(90deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 8%, rgba(255,255,255,0.12) 12%, rgba(255,255,255,0) 30%);
+      mix-blend-mode: overlay; transform: skewX(-10deg);
+      animation: energy-move 1.6s linear infinite;
+      pointer-events: none;
+      opacity: .9;
+    }
+    @keyframes energy-move { 0% { transform: translateX(-40%) skewX(-10deg);} 50% { transform: translateX(0%) skewX(-10deg);} 100% { transform: translateX(40%) skewX(-10deg);} }
+
+    /* glow pulse */
+    .skill-fill.glow { box-shadow: 0 0 60px currentColor, 0 0 140px currentColor, 0 0 200px rgba(0,0,0,0.2) inset; filter: saturate(1.3) brightness(1.2); }
+
+    /* constant electric glow on all bars */
+    .skill-fill { box-shadow: 0 0 20px currentColor, 0 0 40px rgba(0,0,0,0.1) inset; }
+
+    /* color variants using CSS variables for easy tweak */
+    .electric-red { --c1: #ff6b6b; --c2: #ff2e2e; color: var(--c2); }
+    .electric-gold { --c1: #ffe88a; --c2: #f4b400; color: var(--c2); }
+    .electric-blue { --c1: #9ff0ff; --c2: #2aa7ff; color: var(--c2); }
+    .electric-red{ background: none; }
+    .electric-gold{ background: none; }
+    .electric-blue{ background: none; }
+    .electric-red .skill-fill{ background: linear-gradient(90deg,var(--c1),var(--c2)); box-shadow: 0 0 20px rgba(255,90,90,0.45); }
+    .electric-gold .skill-fill{ background: linear-gradient(90deg,var(--c1),var(--c2)); box-shadow: 0 0 18px rgba(244,180,0,0.35); }
+    .electric-blue .skill-fill{ background: linear-gradient(90deg,var(--c1),var(--c2)); box-shadow: 0 0 20px rgba(42,167,255,0.45); }
+
+    /* percentage label on the right */
+    .skill-perc { min-width:44px; text-align:right; font-size:.86rem; color:#64748b; }
+
+    /* small responsive tweak */
+    @media (max-width: 576px){ .skill-name{ min-width:64px; font-size:.95rem } .skill-perc{ min-width:36px; font-size:.8rem } }
+
+    /* intensified electric overlay */
+    .skill-fill::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.02) 8%, rgba(255,255,255,0.12) 18%, rgba(255,255,255,0) 40%);
+      mix-blend-mode: screen;
+      pointer-events: none;
+      opacity: 1;
+      filter: url(#electricNoise);
+      transform: translateZ(0);
+      animation: overlay-shift 1.0s linear infinite;
+    }
+    @keyframes overlay-shift { 0%{ transform: translateX(-10%);} 50%{ transform: translateX(6%);} 100%{ transform: translateX(-10%);} }
+
+    /* bolt sweep element inside fill (bigger, brighter, faster) */
+    .skill-fill .bolt {
+      position: absolute; top: -12%; left: -40%; height: 140%; width: 40%;
+      pointer-events: none; mix-blend-mode: screen;
+      background: linear-gradient(90deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.28) 18%, rgba(255,255,255,0.06) 36%, transparent 60%);
+      filter: blur(12px) drop-shadow(0 0 12px rgba(255,255,255,0.25));
+      transform: skewX(-12deg) translateX(-120%);
+      opacity: 0;
+      box-shadow: 0 0 50px currentColor, 0 0 120px currentColor, 0 0 18px rgba(255,255,255,0.3);
+      transition: opacity .08s ease;
+      will-change: transform, opacity, filter;
+    }
+    @keyframes bolt-sweep { 0% { transform: translateX(-140%) skewX(-12deg); opacity:0 } 8%{ opacity:1 } 30%{ transform: translateX(40%) skewX(-12deg); opacity:0.95 } 60%{ transform: translateX(120%) skewX(-12deg); opacity:0.6 } 100%{ transform: translateX(240%) skewX(-12deg); opacity:0 } }
+
+    /* quick flash burst inside the fill to simulate an electric strike */
+    .skill-fill .flash { position:absolute; inset:0; pointer-events:none; opacity:0; transform:scale(.9);
+      background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.98), rgba(255,255,255,0.5) 12%, rgba(255,255,255,0.12) 28%, transparent 40%);
+      mix-blend-mode: screen; filter: blur(8px) drop-shadow(0 0 18px rgba(255,255,255,0.6));
+      animation: flash-burst 420ms ease-out forwards; }
+    @keyframes flash-burst { 0%{ opacity:0; transform:scale(.96);} 40%{ opacity:1; transform:scale(1);} 100%{ opacity:0; transform:scale(1.06);} }
+
+    /* constant electric sparks inside the fill */
+    .skill-fill .spark { position:absolute; width:3px; height:3px; background:currentColor; border-radius:50%; pointer-events:none;
+      box-shadow: 0 0 10px currentColor, 0 0 20px currentColor; opacity:0; animation: spark-flicker 0.6s ease-in-out infinite; }
+    @keyframes spark-flicker { 0%,100%{ opacity:0; transform:scale(0.5);} 50%{ opacity:1; transform:scale(1.2);} }
+
+    /* electric arc lines sweeping across the fill */
+    .skill-fill .arc { position:absolute; top:0; bottom:0; width:4px; background: linear-gradient(to bottom, transparent, currentColor, transparent);
+      pointer-events:none; opacity:0; transform: translateX(-100%); animation: arc-sweep 0.3s ease-out forwards; }
+    @keyframes arc-sweep { 0%{ opacity:0; transform: translateX(-100%); } 50%{ opacity:1; transform: translateX(50%); } 100%{ opacity:0; transform: translateX(200%); } }
   </style>
 </head>
 <body>
@@ -92,121 +176,132 @@
           <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="Consultas SQL para análise de dados, automação de relatórios e integração de bancos.">
             <img src="https://img.icons8.com/color/28/sql.png" alt="SQL" class="me-2">
             <span class="skill-name">SQL</span>
-            <div class="flex-grow-1 mx-2">
-              <span class="stars">
-                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i>
-              </span>
+            <div class="flex-grow-1 mx-2 electric-gold">
+              <div class="skill-bar" aria-hidden="true">
+                <div class="skill-fill" style="width:60%" data-perc="60"></div>
+              </div>
             </div>
+            <div class="skill-stars" data-perc="60"></div>
           </div>
 
           <!-- Power BI ~65% => ★★★★☆ (3.5) -->
           <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="Dashboards, relatórios interativos, DAX e automação de insights.">
             <img src="https://img.icons8.com/color/28/power-bi.png" alt="Power BI" class="me-2">
             <span class="skill-name">Power BI</span>
-            <div class="flex-grow-1 mx-2">
-              <span class="stars">
-                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i>
-              </span>
+            <div class="flex-grow-1 mx-2 electric-gold">
+              <div class="skill-bar" aria-hidden="true">
+                <div class="skill-fill" style="width:65%" data-perc="65"></div>
+              </div>
             </div>
+            <div class="skill-stars" data-perc="65"></div>
           </div>
           
           <!-- Azure Functions ~70% => ★★★★☆ (3.5) -->
 <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="Serverless, integração de eventos e automação escalável.">
   <img src="https://img.icons8.com/color/28/azure-1.png" alt="Azure Functions" class="me-2">
   <span class="skill-name">Azure </span>
-  <div class="flex-grow-1 mx-2">
-    <span class="stars">
-      <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i>
-    </span>
+  <div class="flex-grow-1 mx-2 electric-gold">
+    <div class="skill-bar" aria-hidden="true">
+      <div class="skill-fill" style="width:70%" data-perc="70"></div>
+    </div>
   </div>
+  <div class="skill-stars" data-perc="70"></div>
 </div>
 
           <!-- Python ~55% => ★★★☆☆ (2.5) -->
           <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="Automação de tarefas, análise, scripts e APIs.">
             <img src="https://img.icons8.com/color/28/python--v1.png" alt="Python" class="me-2">
             <span class="skill-name">Python</span>
-            <div class="flex-grow-1 mx-2">
-              <span class="stars">
-                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i><i class="far fa-star"></i>
-              </span>
+            <div class="flex-grow-1 mx-2 electric-blue">
+              <div class="skill-bar" aria-hidden="true">
+                <div class="skill-fill" style="width:55%" data-perc="55"></div>
+              </div>
             </div>
+            <div class="skill-stars" data-perc="55"></div>
           </div>
 
           <!-- Excel ~65% => ★★★★☆ (3.5) -->
           <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="Dashboards, fórmulas avançadas, automações e integração com Power Query.">
             <img src="https://img.icons8.com/color/28/ms-excel.png" alt="Excel" class="me-2">
             <span class="skill-name">Excel</span>
-            <div class="flex-grow-1 mx-2">
-              <span class="stars">
-                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i>
-              </span>
+            <div class="flex-grow-1 mx-2 electric-gold">
+              <div class="skill-bar" aria-hidden="true">
+                <div class="skill-fill" style="width:65%" data-perc="65"></div>
+              </div>
             </div>
+            <div class="skill-stars" data-perc="65"></div>
           </div>
 
           <!-- GSheets ~65% => ★★★★☆ (3.5) -->
           <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="Google Sheets para relatórios dinâmicos e automação colaborativa.">
             <img src="https://img.icons8.com/color/28/google-sheets.png" alt="GSheets" class="me-2">
             <span class="skill-name">GSheets</span>
-            <div class="flex-grow-1 mx-2">
-              <span class="stars">
-                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i>
-              </span>
+            <div class="flex-grow-1 mx-2 electric-blue">
+              <div class="skill-bar" aria-hidden="true">
+                <div class="skill-fill" style="width:65%" data-perc="65"></div>
+              </div>
             </div>
+            <div class="skill-stars" data-perc="65"></div>
           </div>
 
           <!-- BI ~65% => ★★★★☆ (3.5) -->
           <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="Ferramentas de BI: análise de indicadores e tomada de decisão.">
             <img src="https://img.icons8.com/color/28/combo-chart--v1.png" alt="BI" class="me-2">
             <span class="skill-name">BI</span>
-            <div class="flex-grow-1 mx-2">
-              <span class="stars">
-                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i>
-              </span>
+            <div class="flex-grow-1 mx-2 electric-gold">
+              <div class="skill-bar" aria-hidden="true">
+                <div class="skill-fill" style="width:65%" data-perc="65"></div>
+              </div>
             </div>
+            <div class="skill-stars" data-perc="65"></div>
           </div>
 
           <!-- Inglês ~74% => ★★★★☆ (4.0) -->
           <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="Inglês avançado: leitura, escrita, fala e ambiente de negócios.">
             <img src="https://img.icons8.com/color/28/usa.png" alt="Inglês" class="me-2">
             <span class="skill-name">Inglês</span>
-            <div class="flex-grow-1 mx-2">
-              <span class="stars">
-                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
-              </span>
+            <div class="flex-grow-1 mx-2 electric-blue">
+              <div class="skill-bar" aria-hidden="true">
+                <div class="skill-fill" style="width:74%" data-perc="74"></div>
+              </div>
             </div>
+            <div class="skill-stars" data-perc="74"></div>
           </div>
 
           <!-- HTML ~75% => ★★★★☆ (4.0) -->
           <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="HTML5 para páginas web responsivas.">
             <img src="https://img.icons8.com/color/28/html-5--v1.png" alt="HTML" class="me-2">
             <span class="skill-name">HTML</span>
-            <div class="flex-grow-1 mx-2">
-              <span class="stars">
-                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
-              </span>
+            <div class="flex-grow-1 mx-2 electric-blue">
+              <div class="skill-bar" aria-hidden="true">
+                <div class="skill-fill" style="width:75%" data-perc="75"></div>
+              </div>
             </div>
+            <div class="skill-stars" data-perc="75"></div>
           </div>
 
           <!-- CSS ~70% => ★★★★☆ (3.5) -->
           <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="CSS3: estilização e responsividade web.">
             <img src="https://img.icons8.com/color/28/css3.png" alt="CSS" class="me-2">
             <span class="skill-name">CSS</span>
-            <div class="flex-grow-1 mx-2">
-              <span class="stars">
-                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i>
-              </span>
+            <div class="flex-grow-1 mx-2 electric-red">
+              <div class="skill-bar" aria-hidden="true">
+                <div class="skill-fill" style="width:70%" data-perc="70"></div>
+              </div>
             </div>
+            <div class="skill-stars" data-perc="70"></div>
           </div>
 
           <!-- JS ~55% => ★★★☆☆ (2.5) -->
           <div class="d-flex align-items-center" data-bs-toggle="tooltip" title="JavaScript para interatividade básica e scripts web.">
             <img src="https://img.icons8.com/color/28/javascript--v1.png" alt="JS" class="me-2">
             <span class="skill-name">JS</span>
-            <div class="flex-grow-1 mx-2">
-              <span class="stars">
-                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i><i class="far fa-star"></i>
-              </span>
+            <div class="flex-grow-1 mx-2 electric-red">
+              <div class="skill-bar" aria-hidden="true">
+                <div class="skill-fill" style="width:55%" data-perc="55"></div>
+              </div>
             </div>
+            <div class="skill-stars" data-perc="55"></div>
           </div>
         </div>
       </div>
@@ -264,9 +359,9 @@
               <small>Google Data<br>Analytics</small><br>
              
             </a>
-            <a href="https://vitorfm.work/IBM%20AI.jpg" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Curso introdutório de Inteligência Artificial promovido pelo Movimento IA Brasil, StartSe e IBM.">
-              <img src="https://img.icons8.com/color/48/ibm.png" width="40" alt="IBM"><br>
-              <small>IA para<br>Todos</small>
+            <a href="https://vitorfm.work/LSPILSMF.png" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Desde a coleta e modelagem até a criação de dashboards interativos para tomada de decisões, aplicando ETL, tratamento e storytelling com dados, preparando-os para atuar em áreas como análise de dados, M.I.S. e inteligência de negócios.">
+              <img src="https://vitorfm.work/klabinIA" width="40" alt="Excel e Power BI"><br>
+              <small>Excel e Power BI <br>Dashboards</small>
             </a>
             <a href="https://vitorfm.work/DataXPE.pdf" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="O Minicamp Data Beginner da XPE apresenta os fundamentos, carreiras e ferramentas essenciais da área de dados para quem está começando.">
               <img src="https://vitorfm.work/XPE.png" width="40" alt="XPE"><br>
@@ -384,6 +479,155 @@
 
   <!-- SCRIPTS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- SVG filter defs for electric noise (stronger baseline + named displacement map) -->
+  <svg width="0" height="0" style="position:absolute;left:-9999px;visibility:hidden" aria-hidden="true">
+    <defs>
+      <filter id="electricNoise">
+        <!-- stronger baseline turbulence for more visible displacement -->
+        <feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="2" stitchTiles="stitch" result="noise" />
+        <feColorMatrix type="saturate" values="0" in="noise" result="mono" />
+        <feComponentTransfer in="mono" result="disp">
+          <feFuncR type="table" tableValues="0 1" />
+          <feFuncG type="table" tableValues="0 1" />
+          <feFuncB type="table" tableValues="0 1" />
+        </feComponentTransfer>
+        <!-- larger scale produces a much more dramatic 'electric' jitter -->
+        <feDisplacementMap id="electricDisp" in="SourceGraphic" in2="disp" scale="40" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </defs>
+  </svg>
+  <script>
+    // Animate skill fills from 0 to their data-perc and add electric glow pulses.
+    console.log('Electric bars script starting...');
+    document.addEventListener('DOMContentLoaded', function(){
+      console.log('DOM loaded, initializing electric effects...');
+      try{
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          // if reduced motion, just ensure fills show final width
+          document.querySelectorAll('.skill-fill').forEach(function(f){
+            var p = f.getAttribute('data-perc') || f.style.width || '0%';
+            f.style.width = p;
+          });
+          return;
+        }
+
+        document.querySelectorAll('.skill-fill').forEach(function(fill, i){
+          var target = fill.getAttribute('data-perc') || fill.style.width || '0%';
+          if (!/\d+%/.test(target)) target = parseInt(target,10) + '%';
+          fill.style.width = '0%';
+          setTimeout(function(){ fill.style.width = target; }, 80 + i*80);
+
+          // stronger periodic glow pulses
+          (function loopPulse(){
+            var delay = 600 + Math.random()*1000;
+            setTimeout(function(){
+              fill.classList.add('glow');
+              setTimeout(function(){ fill.classList.remove('glow'); }, 300 + Math.random()*200);
+              loopPulse();
+            }, delay);
+          })();
+        });
+        // append stronger bolt elements and occasional sweeps + flashes for more electricity
+        document.querySelectorAll('.skill-fill').forEach(function(fill){
+          // add 4-6 bolt elements that run bolt-sweep animation randomly
+          var bolts = 4 + Math.floor(Math.random()*3);
+          for(var b=0;b<bolts;b++){
+            var el = document.createElement('div'); el.className='bolt';
+            el.style.animation = 'bolt-sweep ' + (0.5 + Math.random()*0.8).toFixed(2) + 's linear infinite';
+            el.style.animationDelay = (Math.random()*0.8).toFixed(2) + 's';
+            fill.appendChild(el);
+            // periodically trigger a focused sweep (restarts animation)
+            (function(elm){
+              function triggerOnce(){
+                elm.style.opacity = '1';
+                elm.style.animation = 'none';
+                void elm.offsetWidth;
+                elm.style.animation = 'bolt-sweep ' + (0.5 + Math.random()*0.8).toFixed(2) + 's linear';
+                var dur = 800 + Math.random()*600;
+                setTimeout(function(){ elm.style.opacity='0'; }, dur*0.7);
+                setTimeout(triggerOnce, 600 + Math.random()*1200);
+              }
+              setTimeout(triggerOnce, 150 + Math.random()*450);
+            })(el);
+          }
+
+          // occasional quick flash burst to simulate electric strike
+          (function(targetFill){
+            function maybeFlash(){
+              if (Math.random() < 0.5) { // ~50% chance each tick
+                var f = document.createElement('div'); f.className='flash';
+                targetFill.appendChild(f);
+                setTimeout(function(){ try{ f.remove(); }catch(e){} }, 480);
+              }
+              setTimeout(maybeFlash, 500 + Math.random()*800);
+            }
+            setTimeout(maybeFlash, 400 + Math.random()*400);
+          })(fill);
+
+          // constant electric sparks
+          (function(targetFill){
+            function addSpark(){
+              var s = document.createElement('div'); s.className='spark';
+              s.style.left = Math.random()*100 + '%';
+              s.style.top = Math.random()*100 + '%';
+              s.style.animationDelay = Math.random()*0.8 + 's';
+              targetFill.appendChild(s);
+              setTimeout(function(){ try{ s.remove(); }catch(e){} }, 800 + Math.random()*400);
+              setTimeout(addSpark, 200 + Math.random()*400);
+            }
+            setTimeout(addSpark, 100 + Math.random()*200);
+          })(fill);
+
+          // electric arcs sweeping across
+          (function(targetFill){
+            function addArc(){
+              var a = document.createElement('div'); a.className='arc';
+              targetFill.appendChild(a);
+              setTimeout(function(){ try{ a.remove(); }catch(e){} }, 300);
+              setTimeout(addArc, 800 + Math.random()*1200);
+            }
+            setTimeout(addArc, 200 + Math.random()*400);
+          })(fill);
+        });
+      }catch(e){ console.error('skill fill init', e); }
+
+      // animate the SVG turbulence baseFrequency and displacement 'scale' for living electric noise
+      try{
+        var turb = document.querySelector('filter#electricNoise feTurbulence');
+        var disp = document.getElementById('electricDisp');
+        if(turb){
+          setInterval(function(){
+            // vary base frequency more visibly
+            var v = (0.02 + Math.random()*0.12).toFixed(3);
+            turb.setAttribute('baseFrequency', v);
+          }, 180 + Math.random()*340);
+        }
+        if(disp){
+          setInterval(function(){
+            // animate displacement intensity between 20 and 50 for bursts
+            var s = 20 + Math.floor(Math.random()*30);
+            disp.setAttribute('scale', s);
+          }, 300 + Math.random()*600);
+        }
+      }catch(err){ /* non-fatal */ }
+    });
+  </script>
+  <script>
+    // Generate star ratings based on data-perc
+    document.addEventListener('DOMContentLoaded', function(){
+      document.querySelectorAll('.skill-stars').forEach(function(el) {
+        const perc = parseInt(el.getAttribute('data-perc'));
+        const fullStars = Math.floor(perc / 20);
+        const halfStar = (perc % 20) >= 10 ? 1 : 0;
+        const emptyStars = 5 - fullStars - halfStar;
+        let stars = '';
+        for (let i = 0; i < fullStars; i++) stars += '<i class="fas fa-star"></i>';
+        if (halfStar) stars += '<i class="fas fa-star-half-alt"></i>';
+        for (let i = 0; i < emptyStars; i++) stars += '<i class="far fa-star"></i>';
+        el.innerHTML = stars;
+      });
+    });
+  </script>
   <script>
     // Ativar tooltips Bootstrap em todos os elementos marcados
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
