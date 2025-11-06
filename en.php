@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Currículo - Vitor de Freitas Morais UX/UI com Visualização de Dados</title>
-  <meta name="description" content="Profissional de Administração e Ciência de Dados com experiência em análise, visualização e gestão estratégica de dados.">
+  <title>Resume - Vitor de Freitas Morais — UX/UI & Data Visualization</title>
+  <meta name="description" content="Administrator and Data Science student with experience in analysis, visualization and strategic data management.">
   <link rel="icon" type="image/png" href="img/BI.png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Font Awesome para as estrelas -->
@@ -268,20 +268,20 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link" href="https://github.com/hagnok0768" target="_blank">
-              Meus Repositórios
+              My Repositories
               <img src="https://img.icons8.com/ios-filled/18/000000/github.png" style="margin-left:2px;" alt="GitHub">
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="https://vitorfm.work/en.php">
-              English Version
+            <a class="nav-link" href="https://vitorfm.work/default.php">
+              Portuguese Version
               <img src="https://img.icons8.com/color/18/usa.png" style="margin-left:2px;" alt="USA">
             </a>
           </li>
         </ul>
       </div>
-      <b>UX/UI com Visualização de Dados</b>
-      <button id="theme-toggle" class="btn btn-sm ms-2" style="background: none; border: none; color: #259d59; font-size: 1.2rem;" aria-label="Alternar tema">🌙</button>
+      <b>UX/UI with Data Visualization</b>
+      <button id="theme-toggle" class="btn btn-sm ms-2" style="background: none; border: none; color: #259d59; font-size: 1.2rem;" aria-label="Toggle theme">🌙</button>
     </div>
   </nav>
 
@@ -290,17 +290,17 @@
       <!-- HABILIDADES -->
       <div class="col-12 col-md-5 col-lg-3">
         <div class="card shadow-sm p-3 h-100">
-          <h5 class="mb-3">Habilidades</h5>
+          <h5 class="mb-3">Skills</h5>
           
                     <!-- Inglês ~74% => ★★★★☆ (4.0) -->
-          <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="Inglês avançado: leitura, escrita, fala e ambiente de negócios.">
+          <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="English — advanced: reading, writing, speaking and business communication.">
             <img src="https://img.icons8.com/color/28/usa.png" alt="Inglês" class="me-2">
             <span class="skill-name">Inglês</span>
             <div class="d-flex flex-column align-items-start mx-2 electric-blue skill-box" style="width: 140px; flex-shrink: 0;">
               <div class="skill-bar" aria-hidden="true">
                 <div class="skill-fill" style="width:74%" data-perc="74" data-level="adv"></div>
               </div>
-              <div class="skill-perc skill-adv">Avançado</div>
+              <div class="skill-perc skill-adv">Advanced</div>
             </div>
           </div>
           
@@ -313,7 +313,7 @@
               <div class="skill-bar" aria-hidden="true">
                 <div class="skill-fill" style="width:60%" data-perc="60" data-level="reg"></div>
               </div>
-              <div class="skill-perc skill-reg">Regular</div>
+              <div class="skill-perc skill-reg">Intermediate</div>
             </div>
           </div>
 
@@ -325,19 +325,19 @@
               <div class="skill-bar" aria-hidden="true">
                 <div class="skill-fill" style="width:65%" data-perc="65" data-level="reg"></div>
               </div>
-              <div class="skill-perc skill-reg">Regular</div>
+              <div class="skill-perc skill-reg">Intermediate</div>
             </div>
           </div>
           
           <!-- Azure Functions ~70% => ★★★★☆ (3.5) -->
-<div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="Serverless, integração de eventos e automação escalável.">
+  <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="Serverless functions, event integration and scalable automation.">
   <img src="https://img.icons8.com/color/28/azure-1.png" alt="Azure Functions" class="me-2">
   <span class="skill-name">Azure </span>
   <div class="d-flex flex-column align-items-start mx-2 electric-gold skill-box" style="width: 140px; flex-shrink: 0;">
     <div class="skill-bar" aria-hidden="true">
       <div class="skill-fill" style="width:70%" data-perc="70" data-level="adv"></div>
     </div>
-  <div class="skill-perc skill-adv">Avançado</div>
+  <div class="skill-perc skill-adv">Advanced</div>
   </div>
 </div>
 
@@ -351,7 +351,7 @@
               <div class="skill-bar" aria-hidden="true">
                 <div class="skill-fill" style="width:55%" data-perc="55" data-level="bas"></div>
               </div>
-            <div class="skill-perc skill-bas">Básico</div>
+            <div class="skill-perc skill-bas">Basic</div>
             </div>
           </div>
 
@@ -363,7 +363,7 @@
               <div class="skill-bar" aria-hidden="true">
                 <div class="skill-fill" style="width:65%" data-perc="65" data-level="reg"></div>
               </div>
-              <div class="skill-perc skill-reg">Regular</div>
+              <div class="skill-perc skill-reg">Intermediate</div>
             </div>
           </div>
 
@@ -375,7 +375,7 @@
               <div class="skill-bar" aria-hidden="true">
                 <div class="skill-fill" style="width:65%" data-perc="65" data-level="reg"></div>
               </div>
-              <div class="skill-perc skill-reg">Regular</div>
+              <div class="skill-perc skill-reg">Intermediate</div>
             </div>
           </div>
 
@@ -399,7 +399,7 @@
               <div class="skill-bar" aria-hidden="true">
                 <div class="skill-fill" style="width:75%" data-perc="75" data-level="adv"></div>
               </div>
-              <div class="skill-perc skill-adv">Avançado</div>
+              <div class="skill-perc skill-adv">Advanced</div>
             </div>
           </div>
 
@@ -411,7 +411,7 @@
               <div class="skill-bar" aria-hidden="true">
                 <div class="skill-fill" style="width:70%" data-perc="70" data-level="adv"></div>
               </div>
-              <div class="skill-perc skill-adv">Avançado</div>
+              <div class="skill-perc skill-adv">Advanced</div>
             </div>
           </div>
 
@@ -423,7 +423,7 @@
               <div class="skill-bar" aria-hidden="true">
                 <div class="skill-fill" style="width:75%" data-perc="75" data-level="adv"></div>
               </div>
-              <div class="skill-perc skill-adv">Avançado</div>
+              <div class="skill-perc skill-adv">Advanced</div>
             </div>
           </div>
           <!-- Additional skills: Coding, VS Code, GitHub -->
@@ -465,37 +465,37 @@
       <!-- SOBRE MIM E CERTIFICADOS -->
       <div class="col-12 col-md-7 col-lg-5">
         <div class="card shadow-sm p-4 h-100">
-             <h2 class="mb-3 text-center">Vitor de Freitas Morais</h2>
-          <div class="mb-3 text-center mx-auto" style="font-size:1.08rem; max-width:720px;">
-            Administrador com perfil analítico e tech, focado em transformar dados em resultados para negócios.
-          </div>
+            <h2 class="mb-3 text-center">Vitor de Freitas Morais</h2>
+            <div class="mb-3 text-center mx-auto" style="font-size:1.08rem; max-width:720px;">
+              Administrator with an analytical and tech profile, focused on turning data into business results.
+            </div>
           <div class="bg-light rounded-3 p-3 mb-3">
-            <h6 class="fw-bold mb-2 text-center">Formação Acadêmica</h6>
+            <h6 class="fw-bold mb-2 text-center">Education</h6>
             <div class="d-flex flex-wrap flex-md-nowrap gap-3 align-items-center justify-content-center">
               <div class="d-flex align-items-center bg-white rounded-pill px-3 py-2 shadow-sm" style="min-width:210px;">
                 <a href="img/Grade Adm Vitor Atualizada.jpeg" target="_blank" class="me-2">
                   <img src="https://img.icons8.com/color/48/000000/university.png" alt="Administração" width="28" height="28"/>
                 </a>
                 <div>
-                  <a href="img/Grade Adm Vitor Atualizada.jpeg" target="_blank" class="fw-semibold text-decoration-none text-dark">Administração</a>
-                  <div class="small text-muted">UFRRJ <span class="badge bg-warning text-dark ms-1">Em andamento</span></div>
-                  <div class="small text-secondary">Previsão: 2026/1</div>
+                  <a href="img/Grade Adm Vitor Atualizada.jpeg" target="_blank" class="fw-semibold text-decoration-none text-dark">Business Administration</a>
+                  <div class="small text-muted">UFRRJ <span class="badge bg-warning text-dark ms-1">In progress</span></div>
+                  <div class="small text-secondary">Expected: 2026/1</div>
                 </div>
               </div>
               <div class="d-flex align-items-center bg-white rounded-pill px-3 py-2 shadow-sm" style="min-width:210px;">
                 <img src="https://img.icons8.com/color/48/000000/engineering.png" alt="Engenharia da Computação" width="28" height="28" class="me-2"/>
                 <div>
-                  <span class="fw-semibold">Eng. da Computação</span>
+                  <span class="fw-semibold">Computer Engineering</span>
                   <div class="small text-muted">UERJ</div>
                 </div>
               </div>
             </div>
           </div>
-          <h6 class="fw-bold mb-2 text-center">Certificados</h6>
+          <h6 class="fw-bold mb-2 text-center">Certificates</h6>
           <div class="d-flex flex-wrap gap-3 justify-content-center">
-            <a href="img/clac en.jpg" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Curso de inglês prático e completo (CLAC UFRJ, 400h)">
+              <a href="img/clac en.jpg" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Comprehensive English course (CLAC UFRJ, 400h)">
               <img src="https://img.icons8.com/color/48/language.png" width="40" alt="Idioma"><br>
-              <small>Inglês<br>CLAC UFRJ</small>
+              <small>English<br>CLAC UFRJ</small>
             </a>
             <a href="img/Certificado Descomplica.png" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Desenvolvimento web com CSS, JavaScript, UX, HTML, design thinking e gestão de projetos (220h, 2023)">
               <img src="https://img.icons8.com/color/48/source-code.png" width="40" alt="Front-end"><br>
@@ -509,15 +509,15 @@
               <img src="https://img.icons8.com/color/48/python.png" width="40" alt="Python"><br>
               <small>Squadio<br>Analytics</small>
             </a>
-            <a href="https://www.coursera.org/account/accomplishments/verify/86TY6U736SMU" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Google Data Analytics Coursera">
+            <a href="https://www.coursera.org/account/accomplishments/verify/86TY6U736SMU" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Google Data Analytics (Coursera)">
               <img src="https://img.icons8.com/color/48/google-logo.png" width="40" alt="Google Data"><br>
               <small>Google Data<br>Analytics</small><br>
              
             </a>
             <!-- Binance certificate removed from here and reinserted as last certificate to avoid ordering issues -->
-            <a href="img/LSPILSMF.png" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Desde a coleta e modelagem até a criação de dashboards interativos para tomada de decisões, aplicando ETL, tratamento e storytelling com dados, preparando-os para atuar em áreas como análise de dados, M.I.S. e inteligência de negócios. (180h, 2025)">
+            <a href="img/LSPILSMF.png" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="From collection and modeling to interactive dashboards for decision-making, applying ETL, cleaning and storytelling with data. (180h, 2025)">
               <img src="img/klabinIA" width="40" alt="Excel e Power BI"><br>
-              <small>Excel e Power BI <br>Dashboards</small>
+              <small>Excel & Power BI <br>Dashboards</small>
             </a>
             <a href="img/HUO5JUNU.png" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title=" Fluxo de análise de dados com ferramentas como SQL, Excel com copilot, Azure Services e IA, aplicando projetos práticos com ETL, dashboards e machine learning. (104hr, 2025)">
               <img src="img/dio.webp" width="40" alt="DIO"><br>
@@ -538,9 +538,9 @@
               <small>IFRS<br>Estatística</small></br>
             </a>
             
-                        <a href="https://web.dio.me/track/bootcamp-blockchain-developer-with-solidity-2025" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Binance - Blockchain Developer (Bootcamp) - Em andamento">
+                        <a href="https://web.dio.me/track/bootcamp-blockchain-developer-with-solidity-2025" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Binance - Blockchain Developer (Bootcamp) - In progress">
               <img src="img/Binance - Blockchain Developer.webp" width="40" alt="Binance - Blockchain Developer"><br>
-              <small>Binance<br>Blockchain<br> Dev</small></br>
+                          <small>Binance<br>Blockchain<br> Dev</small></br>
             </a>
 
             
@@ -550,79 +550,79 @@
 
       <!-- EXPERIÊNCIA + CONTATO -->
       <div class="col-12 col-lg-4">
-        <div class="card shadow-sm p-4 h-100 text-center">
-          <h5 class="mb-3 text-center">Experiência Profissional</h5>
+          <div class="card shadow-sm p-4 h-100 text-center">
+          <h5 class="mb-3 text-center">Work Experience</h5>
           <div class="accordion mb-4" id="experienciaAccordion">
             <div class="accordion-item">
               <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#exp1">
-                  Estágio em Suporte e Manutenção em Hardware – ADM (NBS)
+                  Hardware Support & Maintenance Intern – ADM (NBS)
                 </button>
               </h2>
               <div id="exp1" class="accordion-collapse collapse" data-bs-parent="#experienciaAccordion">
                 <div class="accordion-body">
-                  Suporte técnico e manutenção de hardware para otimizar a infraestrutura da empresa publicitária.
+                  Technical support and hardware maintenance to optimize the advertising agency's infrastructure.
                 </div>
               </div>
             </div>
             <div class="accordion-item">
               <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#exp3">
-                  Estágio em Desenvolvimento de Software – Pix Soft (DeMillus)
+                  Software Development Intern – Pix Soft (DeMillus)
                 </button>
               </h2>
               <div id="exp3" class="accordion-collapse collapse" data-bs-parent="#experienciaAccordion">
                 <div class="accordion-body">
-                  Atuei com VB e SQL, atualizando versões e desenvolvendo relatórios para diretoria e gerência.
+                  Worked with VB and SQL, updating versions and developing reports for management.
                 </div>
               </div>
             </div>
             <div class="accordion-item">
               <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#exp4">
-                  Estágio em Desenvolvimento de Software – DB Trans
+                  Software Development Intern – DB Trans
                 </button>
               </h2>
               <div id="exp4" class="accordion-collapse collapse" data-bs-parent="#experienciaAccordion">
                 <div class="accordion-body">
-                  Trabalhei com ASP.NET, SQL e XML, desenvolvendo soluções para a empresa de pedágios.
+                  Worked with ASP.NET, SQL and XML, developing solutions for the toll company.
                 </div>
               </div>
             </div>
             <div class="accordion-item">
               <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#exp5">
-                  Gestor de Marketplaces (Atual)
+                  Marketplaces Manager (Current)
                 </button>
               </h2>
               <div id="exp5" class="accordion-collapse collapse" data-bs-parent="#experienciaAccordion">
                 <div class="accordion-body">
-                  Atuo gerenciando vendas em plataformas como Mercado Livre, eBay e Amazon, otimizando anúncios, analisando métricas de desempenho e implementando estratégias para aumento de vendas.
+                  Managing sales on platforms such as Mercado Livre, eBay and Amazon, optimizing listings, analyzing performance metrics and implementing strategies to increase sales.
                 </div>
               </div>
             </div>
             <div class="accordion-item">
               <h2 class="accordion-header">
                 <button class="accordion-button collapsed text-success fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#exp6">
-                  Estágio BI Análise de Dados - Ligg Contact Services (Atual)
+                  BI Data Analysis Intern - Ligg Contact Services (Current)
                 </button>
               </h2>
               <div id="exp6" class="accordion-collapse collapse" data-bs-parent="#experienciaAccordion">
                 <div class="accordion-body text-success">
-                  Suporte em Business Intelligence, realizando análises, dashboards e cruzamento de dados de sistemas para gerar insights e apoiar decisões estratégicas na área de cobrança com  
+                  Support in Business Intelligence, performing analyses, dashboards and cross-referencing system data to generate insights and support strategic decisions in the collections area with  
                   <span class="hover-text">
-                    Visualização de Dados.
+                    Data Visualization.
                     <img src="img/visu.png" alt="Preview">
                   </span>
                 </div>
               </div>
             </div>
           </div>
-          <h5 class="mb-2">Contato</h5>
+          <h5 class="mb-2">Contact</h5>
           <ul class="list-unstyled mb-0">
             <li>
               <img src="https://img.icons8.com/color/20/whatsapp.png" alt="WhatsApp">
-              <a class="wa-link" href="https://wa.me/5521987385290?text=Olá%2C%20quero%20falar%20com%20você!" target="_blank">WhatsApp: +55 21 98738-5290</a>
+              <a class="wa-link" href="https://wa.me/5521987385290?text=Hello%2C%20I%27d%20like%20to%20talk%20with%20you!" target="_blank">WhatsApp: +55 21 98738-5290</a>
             </li>
             <li>
               <img src="https://img.icons8.com/color/20/new-post.png" alt="Email">
