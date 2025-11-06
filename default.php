@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Currículo - Vitor de Freitas Morais UX/UI com Visualização de Dados</title>
   <meta name="description" content="Profissional de Administração e Ciência de Dados com experiência em análise, visualização e gestão estratégica de dados.">
-  <link rel="icon" type="image/png" href="BI.png">
+  <link rel="icon" type="image/png" href="img/BI.png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Font Awesome para as estrelas -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -50,15 +50,19 @@
     .stars { display:none; }
     .skill-name { min-width: 80px; font-weight:600; }
 
-    /* Electric glowing bars */
-    .skill-bar { height: 14px; background: #0b1218; border-radius: 999px; padding: 3px; box-shadow: inset 0 -3px 8px rgba(0,0,0,0.7); overflow: hidden; position: relative; }
+  /* Electric glowing bars (increased vertical size for better visibility) */
+  /* bumped up slightly per user request */
+  .skill-bar { height: 26px; background: #0b1218; border-radius: 999px; padding: 6px; box-shadow: inset 0 -4px 12px rgba(0,0,0,0.72); overflow: hidden; position: relative; }
     .skill-fill {
-      height: 100%; border-radius: 999px; width: 0%;
-      background-size: 200% 100%;
-      transition: width 900ms cubic-bezier(.2,.9,.2,1), box-shadow .18s ease, filter .18s ease;
-      box-shadow: 0 0 18px rgba(0,0,0,0.12) inset;
-      position: relative; overflow: hidden;
-    }
+        height: 100%; border-radius: 999px; width: 0%;
+        background-size: 200% 100%;
+        transition: width 900ms cubic-bezier(.2,.9,.2,1), box-shadow .18s ease, filter .18s ease;
+        box-shadow: 0 0 18px rgba(0,0,0,0.12) inset;
+        position: relative; overflow: hidden;
+        /* canonical color vars: color is used for currentColor; --glow-color controls glow tints */
+        --glow-color: currentColor;
+        color: inherit;
+      }
     /* animated moving energy inside the fill */
     .skill-fill::before{
       content: '';
@@ -72,33 +76,63 @@
     @keyframes energy-move { 0% { transform: translateX(-40%) skewX(-10deg);} 50% { transform: translateX(0%) skewX(-10deg);} 100% { transform: translateX(40%) skewX(-10deg);} }
 
     /* glow pulse */
-    .skill-fill.glow { box-shadow: 0 0 60px currentColor, 0 0 140px currentColor, 0 0 200px rgba(0,0,0,0.2) inset; filter: saturate(1.3) brightness(1.2); }
+    .skill-fill.glow { box-shadow: 0 0 60px var(--glow-color), 0 0 140px var(--glow-color), 0 0 200px rgba(0,0,0,0.2) inset; filter: saturate(1.3) brightness(1.2); }
 
-    /* constant electric glow on all bars */
-    .skill-fill { box-shadow: 0 0 20px currentColor, 0 0 40px rgba(0,0,0,0.1) inset; }
+  /* constant electric glow on all bars (boosted +10% intensity) */
+  .skill-fill { --glow-color: currentColor; box-shadow: 0 0 24px var(--glow-color), 0 0 44px rgba(0,0,0,0.11) inset; }
 
     /* color variants using CSS variables for easy tweak */
-    .electric-red { --c1: #ff6b6b; --c2: #ff2e2e; color: var(--c2); }
-    .electric-gold { --c1: #ffe88a; --c2: #f4b400; color: var(--c2); }
-    .electric-blue { --c1: #9ff0ff; --c2: #2aa7ff; color: var(--c2); }
-    .electric-red{ background: none; }
-    .electric-gold{ background: none; }
-    .electric-blue{ background: none; }
-    .electric-red .skill-fill{ background: linear-gradient(90deg,var(--c1),var(--c2)); box-shadow: 0 0 20px rgba(255,90,90,0.45); }
-    .electric-gold .skill-fill{ background: linear-gradient(90deg,var(--c1),var(--c2)); box-shadow: 0 0 18px rgba(244,180,0,0.35); }
-    .electric-blue .skill-fill{ background: linear-gradient(90deg,var(--c1),var(--c2)); box-shadow: 0 0 20px rgba(42,167,255,0.45); }
+  .electric-red { --c1: #ff6b6b; --c2: #ff2e2e; }
+  .electric-gold { --c1: #ffe88a; --c2: #f4b400; }
+  .electric-blue { --c1: #9ff0ff; --c2: #2aa7ff; }
+  .electric-red{ background: none; }
+  .electric-gold{ background: none; }
+  .electric-blue{ background: none; }
+  .electric-red .skill-fill{ color: var(--c2); --glow-color: rgba(255,90,90,0.45); background: linear-gradient(90deg,var(--c1),var(--c2)); box-shadow: 0 0 20px var(--glow-color); }
+  .electric-gold .skill-fill{ color: var(--c2); --glow-color: rgba(244,180,0,0.35); background: linear-gradient(90deg,var(--c1),var(--c2)); box-shadow: 0 0 18px var(--glow-color); }
+  .electric-blue .skill-fill{ color: var(--c2); --glow-color: rgba(42,167,255,0.45); background: linear-gradient(90deg,var(--c1),var(--c2)); box-shadow: 0 0 20px var(--glow-color); }
 
-    /* percentage label on the right */
-    .skill-perc { min-width:44px; text-align:right; font-size:.86rem; color:#64748b; }
+  /* map qualitative levels to bar color/gradient while keeping electric effects */
+  /* level-based fills and boosted glow (≈ +10%) */
+  .skill-fill[data-level="adv"] { color: #1db954; --glow-color: rgba(29,185,84,0.55); background: linear-gradient(90deg,#8ef3b0,#1db954); box-shadow: 0 0 24px var(--glow-color); }
+  .skill-fill[data-level="reg"] { color: #f4b400; --glow-color: rgba(244,180,0,0.44); background: linear-gradient(90deg,#fff3b0,#f4b400); box-shadow: 0 0 22px var(--glow-color); }
+  .skill-fill[data-level="bas"] { color: #ff8a00; --glow-color: rgba(255,138,0,0.495); background: linear-gradient(90deg,#ffd6a3,#ff8a00); box-shadow: 0 0 22px var(--glow-color); }
+
+  /* status label shown inside the bar (centered). Black in light theme, white in dark theme.
+     Positioned absolutely inside the .skill-box so it overlays the .skill-fill. */
+  .skill-perc {
+    position: absolute;
+    left: 6px;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    font-size: .56rem; /* ainda menores conforme pedido */
+    color: inherit; /* color definida pelas classes .skill-adv/.skill-reg/.skill-bas */
+    font-weight: 700;
+    pointer-events: none;
+    z-index: 3;
+    white-space: nowrap;
+    /* black outer border via multiple shadows to simulate outline */
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  }
+
+  /* qualitative skill level colors */
+  .skill-adv { color: #1db954; font-weight:700; } /* Avançado - green */
+  .skill-reg { color: #f4b400; font-weight:700; } /* Regular - yellow/gold */
+  .skill-bas { color: #ff8a00; font-weight:700; } /* Básico - orange */
 
     /* small responsive tweak */
-    @media (max-width: 576px){ .skill-name{ min-width:64px; font-size:.95rem } .skill-perc{ min-width:36px; font-size:.8rem } }
+  @media (max-width: 576px){ .skill-name{ min-width:64px; font-size:.95rem } .skill-perc{ font-size:.5rem; left:4px; right:4px } }
+
+  /* do not force label color here — keep level colors (they already have dark-theme overrides) */
+  /* outline remains via text-shadow so labels keep readable over fills */
 
     /* intensified electric overlay */
     .skill-fill::after {
       content: '';
       position: absolute; inset: 0;
-      background: linear-gradient(90deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.02) 8%, rgba(255,255,255,0.12) 18%, rgba(255,255,255,0) 40%);
+      background: linear-gradient(90deg, rgba(8, 7, 7, 0.18) 0%, rgba(255,255,255,0.02) 8%, rgba(255,255,255,0.12) 18%, rgba(255,255,255,0) 40%);
       mix-blend-mode: screen;
       pointer-events: none;
       opacity: 1;
@@ -110,13 +144,14 @@
 
     /* bolt sweep element inside fill (bigger, brighter, faster) */
     .skill-fill .bolt {
-      position: absolute; top: -12%; left: -40%; height: 140%; width: 40%;
+      /* moved a bit higher and made taller so bolt sweep covers the taller bar */
+      position: absolute; top: -14%; left: -40%; height: 200%; width: 42%;
       pointer-events: none; mix-blend-mode: screen;
       background: linear-gradient(90deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.28) 18%, rgba(255,255,255,0.06) 36%, transparent 60%);
-      filter: blur(12px) drop-shadow(0 0 12px rgba(255,255,255,0.25));
+      filter: blur(14px) drop-shadow(0 0 14px rgba(255,255,255,0.28));
       transform: skewX(-12deg) translateX(-120%);
       opacity: 0;
-      box-shadow: 0 0 50px currentColor, 0 0 120px currentColor, 0 0 18px rgba(255,255,255,0.3);
+      box-shadow: 0 0 60px currentColor, 0 0 140px currentColor, 0 0 18px rgba(255,255,255,0.3);
       transition: opacity .08s ease;
       will-change: transform, opacity, filter;
     }
@@ -139,6 +174,86 @@
       pointer-events:none; opacity:0; transform: translateX(-100%); animation: arc-sweep 0.3s ease-out forwards; }
     @keyframes arc-sweep { 0%{ opacity:0; transform: translateX(-100%); } 50%{ opacity:1; transform: translateX(50%); } 100%{ opacity:0; transform: translateX(200%); } }
   </style>
+  <style>
+    /* Skill box sizing to keep bars uniform */
+    .skill-box { width: 140px; min-width: 120px; flex: 0 0 140px; }
+    .skill-box .skill-bar { width: 100%; }
+    @media (max-width: 576px) {
+      .skill-box { width: 110px; min-width: 90px; flex: 0 0 110px; }
+    }
+  /* adjust .skill-perc positioning (now absolute inside .skill-box) */
+  .skill-box { position: relative; }
+  .skill-box .skill-perc { position: absolute; left:6px; right:6px; top:50%; transform:translateY(-50%); }
+    /* keep two-line certificate second row on a single line with badge */
+    .cert-line-2 { display: inline-block; white-space: nowrap; vertical-align: middle; }
+  </style>
+  <style>
+    /* Dark theme styles inspired by Spotify (apply when <body class="dark-theme">) */
+    body.dark-theme {
+      --spotify-black: #121212;
+      --spotify-dark-gray: #1e1e1e;
+      --spotify-gray: #b3b3b3;
+      --spotify-light-gray: #535353;
+      --spotify-green: #1db954;
+      --spotify-white: #ffffff;
+      background: var(--spotify-black) !important;
+      color: var(--spotify-white) !important;
+    }
+
+    body.dark-theme .navbar {
+      background: var(--spotify-black) !important;
+      border-bottom: 1px solid var(--spotify-dark-gray);
+    }
+
+    body.dark-theme .navbar-brand { color: var(--spotify-white) !important; }
+    body.dark-theme .navbar-nav .nav-link { color: var(--spotify-gray) !important; }
+    body.dark-theme .navbar-nav .nav-link:hover { color: var(--spotify-white) !important; }
+
+    body.dark-theme .card {
+      background: var(--spotify-dark-gray) !important;
+      color: var(--spotify-white) !important;
+      border: 1px solid var(--spotify-light-gray);
+    }
+
+    body.dark-theme .bg-light, body.dark-theme .bg-white {
+      background: var(--spotify-dark-gray) !important;
+      color: var(--spotify-white) !important;
+    }
+
+    body.dark-theme .text-muted, body.dark-theme .text-secondary { color: var(--spotify-gray) !important; }
+    body.dark-theme .text-dark { color: var(--spotify-white) !important; }
+
+    body.dark-theme .badge { background: var(--spotify-green) !important; color: var(--spotify-black) !important; }
+
+    body.dark-theme .accordion-button {
+      background: var(--spotify-dark-gray) !important;
+      color: var(--spotify-white) !important;
+      border: 1px solid var(--spotify-light-gray);
+    }
+
+    body.dark-theme .accordion-button:not(.collapsed) { background: var(--spotify-light-gray) !important; color: var(--spotify-white) !important; }
+    body.dark-theme .accordion-body { background: var(--spotify-black) !important; color: var(--spotify-white) !important; }
+
+    body.dark-theme .list-unstyled li a { color: var(--spotify-gray) !important; }
+    body.dark-theme .list-unstyled li a:hover { color: var(--spotify-white) !important; }
+
+    body.dark-theme #theme-toggle { color: var(--spotify-green) !important; }
+
+    /* Improve electric bars contrast on dark theme */
+    body.dark-theme .skill-bar {
+      background: linear-gradient(180deg,#0b0b0b,#0f0f0f) !important;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+  body.dark-theme .skill-fill { box-shadow: 0 0 30px var(--glow-color), inset 0 -3px 8px rgba(0,0,0,0.6); }
+    /* ensure contrast in dark mode for skill labels */
+    body.dark-theme .skill-adv { color: #1db954 !important; }
+    body.dark-theme .skill-reg { color: #f4b400 !important; }
+    body.dark-theme .skill-bas { color: #ff8a00 !important; }
+    /* level-specific fills in dark theme to preserve glow */
+  body.dark-theme .skill-fill[data-level="adv"] { --glow-color: rgba(29,185,84,0.70); box-shadow: 0 0 40px var(--glow-color), inset 0 -3px 10px rgba(0,0,0,0.6); }
+  body.dark-theme .skill-fill[data-level="reg"] { --glow-color: rgba(244,180,0,0.58); box-shadow: 0 0 36px var(--glow-color), inset 0 -3px 10px rgba(0,0,0,0.6); }
+  body.dark-theme .skill-fill[data-level="bas"] { --glow-color: rgba(255,138,0,0.58); box-shadow: 0 0 36px var(--glow-color), inset 0 -3px 10px rgba(0,0,0,0.6); }
+  </style>
 </head>
 <body>
   <!-- NAVBAR -->
@@ -148,7 +263,7 @@
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" href="https://github.com/hagnok0768?tab=repositories" target="_blank">
+            <a class="nav-link" href="https://github.com/hagnok0768" target="_blank">
               Meus Repositórios
               <img src="https://img.icons8.com/ios-filled/18/000000/github.png" style="margin-left:2px;" alt="GitHub">
             </a>
@@ -162,6 +277,7 @@
         </ul>
       </div>
       <b>UX/UI com Visualização de Dados</b>
+      <button id="theme-toggle" class="btn btn-sm ms-2" style="background: none; border: none; color: #259d59; font-size: 1.2rem;" aria-label="Alternar tema">🌙</button>
     </div>
   </nav>
 
@@ -171,137 +287,173 @@
       <div class="col-12 col-md-5 col-lg-3">
         <div class="card shadow-sm p-3 h-100">
           <h5 class="mb-3">Habilidades</h5>
+          
+                    <!-- Inglês ~74% => ★★★★☆ (4.0) -->
+          <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="Inglês avançado: leitura, escrita, fala e ambiente de negócios.">
+            <img src="https://img.icons8.com/color/28/usa.png" alt="Inglês" class="me-2">
+            <span class="skill-name">Inglês</span>
+            <div class="d-flex flex-column align-items-start mx-2 electric-blue skill-box" style="width: 140px; flex-shrink: 0;">
+              <div class="skill-bar" aria-hidden="true">
+                <div class="skill-fill" style="width:74%" data-perc="74" data-level="adv"></div>
+              </div>
+              <div class="skill-perc skill-adv">Avançado</div>
+            </div>
+          </div>
+          
 
           <!-- SQL ~60% => ★★★★☆ (3.5 arred. visual) -->
           <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="Consultas SQL para análise de dados, automação de relatórios e integração de bancos.">
             <img src="https://img.icons8.com/color/28/sql.png" alt="SQL" class="me-2">
             <span class="skill-name">SQL</span>
-            <div class="flex-grow-1 mx-2 electric-gold">
+            <div class="d-flex flex-column align-items-start mx-2 electric-gold skill-box" style="width: 140px; flex-shrink: 0;">
               <div class="skill-bar" aria-hidden="true">
-                <div class="skill-fill" style="width:60%" data-perc="60"></div>
+                <div class="skill-fill" style="width:60%" data-perc="60" data-level="reg"></div>
               </div>
+              <div class="skill-perc skill-reg">Regular</div>
             </div>
-            <div class="skill-stars" data-perc="60"></div>
           </div>
 
           <!-- Power BI ~65% => ★★★★☆ (3.5) -->
           <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="Dashboards, relatórios interativos, DAX e automação de insights.">
             <img src="https://img.icons8.com/color/28/power-bi.png" alt="Power BI" class="me-2">
             <span class="skill-name">Power BI</span>
-            <div class="flex-grow-1 mx-2 electric-gold">
+            <div class="d-flex flex-column align-items-start mx-2 electric-gold skill-box" style="width: 140px; flex-shrink: 0;">
               <div class="skill-bar" aria-hidden="true">
-                <div class="skill-fill" style="width:65%" data-perc="65"></div>
+                <div class="skill-fill" style="width:65%" data-perc="65" data-level="reg"></div>
               </div>
+              <div class="skill-perc skill-reg">Regular</div>
             </div>
-            <div class="skill-stars" data-perc="65"></div>
           </div>
           
           <!-- Azure Functions ~70% => ★★★★☆ (3.5) -->
 <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="Serverless, integração de eventos e automação escalável.">
   <img src="https://img.icons8.com/color/28/azure-1.png" alt="Azure Functions" class="me-2">
   <span class="skill-name">Azure </span>
-  <div class="flex-grow-1 mx-2 electric-gold">
+  <div class="d-flex flex-column align-items-start mx-2 electric-gold skill-box" style="width: 140px; flex-shrink: 0;">
     <div class="skill-bar" aria-hidden="true">
-      <div class="skill-fill" style="width:70%" data-perc="70"></div>
+      <div class="skill-fill" style="width:70%" data-perc="70" data-level="adv"></div>
     </div>
+  <div class="skill-perc skill-adv">Avançado</div>
   </div>
-  <div class="skill-stars" data-perc="70"></div>
 </div>
+
+
 
           <!-- Python ~55% => ★★★☆☆ (2.5) -->
           <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="Automação de tarefas, análise, scripts e APIs.">
             <img src="https://img.icons8.com/color/28/python--v1.png" alt="Python" class="me-2">
             <span class="skill-name">Python</span>
-            <div class="flex-grow-1 mx-2 electric-blue">
+            <div class="d-flex flex-column align-items-start mx-2 electric-blue skill-box">
               <div class="skill-bar" aria-hidden="true">
-                <div class="skill-fill" style="width:55%" data-perc="55"></div>
+                <div class="skill-fill" style="width:55%" data-perc="55" data-level="bas"></div>
               </div>
+            <div class="skill-perc skill-bas">Básico</div>
             </div>
-            <div class="skill-stars" data-perc="55"></div>
           </div>
 
           <!-- Excel ~65% => ★★★★☆ (3.5) -->
           <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="Dashboards, fórmulas avançadas, automações e integração com Power Query.">
             <img src="https://img.icons8.com/color/28/ms-excel.png" alt="Excel" class="me-2">
             <span class="skill-name">Excel</span>
-            <div class="flex-grow-1 mx-2 electric-gold">
+            <div class="d-flex flex-column align-items-start mx-2 electric-gold skill-box">
               <div class="skill-bar" aria-hidden="true">
-                <div class="skill-fill" style="width:65%" data-perc="65"></div>
+                <div class="skill-fill" style="width:65%" data-perc="65" data-level="reg"></div>
               </div>
+              <div class="skill-perc skill-reg">Regular</div>
             </div>
-            <div class="skill-stars" data-perc="65"></div>
           </div>
 
           <!-- GSheets ~65% => ★★★★☆ (3.5) -->
           <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="Google Sheets para relatórios dinâmicos e automação colaborativa.">
             <img src="https://img.icons8.com/color/28/google-sheets.png" alt="GSheets" class="me-2">
             <span class="skill-name">GSheets</span>
-            <div class="flex-grow-1 mx-2 electric-blue">
+            <div class="d-flex flex-column align-items-start mx-2 electric-blue skill-box">
               <div class="skill-bar" aria-hidden="true">
-                <div class="skill-fill" style="width:65%" data-perc="65"></div>
+                <div class="skill-fill" style="width:65%" data-perc="65" data-level="reg"></div>
               </div>
+              <div class="skill-perc skill-reg">Regular</div>
             </div>
-            <div class="skill-stars" data-perc="65"></div>
           </div>
 
           <!-- BI ~65% => ★★★★☆ (3.5) -->
           <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="Ferramentas de BI: análise de indicadores e tomada de decisão.">
             <img src="https://img.icons8.com/color/28/combo-chart--v1.png" alt="BI" class="me-2">
             <span class="skill-name">BI</span>
-            <div class="flex-grow-1 mx-2 electric-gold">
+            <div class="d-flex flex-column align-items-start mx-2 electric-gold skill-box">
               <div class="skill-bar" aria-hidden="true">
-                <div class="skill-fill" style="width:65%" data-perc="65"></div>
+                <div class="skill-fill" style="width:65%" data-perc="65" data-level="reg"></div>
               </div>
+              <div class="skill-perc skill-reg">Regular</div>
             </div>
-            <div class="skill-stars" data-perc="65"></div>
-          </div>
-
-          <!-- Inglês ~74% => ★★★★☆ (4.0) -->
-          <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="Inglês avançado: leitura, escrita, fala e ambiente de negócios.">
-            <img src="https://img.icons8.com/color/28/usa.png" alt="Inglês" class="me-2">
-            <span class="skill-name">Inglês</span>
-            <div class="flex-grow-1 mx-2 electric-blue">
-              <div class="skill-bar" aria-hidden="true">
-                <div class="skill-fill" style="width:74%" data-perc="74"></div>
-              </div>
-            </div>
-            <div class="skill-stars" data-perc="74"></div>
           </div>
 
           <!-- HTML ~75% => ★★★★☆ (4.0) -->
           <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="HTML5 para páginas web responsivas.">
             <img src="https://img.icons8.com/color/28/html-5--v1.png" alt="HTML" class="me-2">
             <span class="skill-name">HTML</span>
-            <div class="flex-grow-1 mx-2 electric-blue">
+            <div class="d-flex flex-column align-items-start mx-2 electric-blue skill-box">
               <div class="skill-bar" aria-hidden="true">
-                <div class="skill-fill" style="width:75%" data-perc="75"></div>
+                <div class="skill-fill" style="width:75%" data-perc="75" data-level="adv"></div>
               </div>
+              <div class="skill-perc skill-adv">Avançado</div>
             </div>
-            <div class="skill-stars" data-perc="75"></div>
           </div>
 
           <!-- CSS ~70% => ★★★★☆ (3.5) -->
           <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="CSS3: estilização e responsividade web.">
             <img src="https://img.icons8.com/color/28/css3.png" alt="CSS" class="me-2">
             <span class="skill-name">CSS</span>
-            <div class="flex-grow-1 mx-2 electric-red">
+            <div class="d-flex flex-column align-items-start mx-2 electric-red skill-box">
               <div class="skill-bar" aria-hidden="true">
-                <div class="skill-fill" style="width:70%" data-perc="70"></div>
+                <div class="skill-fill" style="width:70%" data-perc="70" data-level="adv"></div>
               </div>
+              <div class="skill-perc skill-adv">Avançado</div>
             </div>
-            <div class="skill-stars" data-perc="70"></div>
           </div>
 
           <!-- JS ~55% => ★★★☆☆ (2.5) -->
           <div class="d-flex align-items-center" data-bs-toggle="tooltip" title="JavaScript para interatividade básica e scripts web.">
             <img src="https://img.icons8.com/color/28/javascript--v1.png" alt="JS" class="me-2">
             <span class="skill-name">JS</span>
-            <div class="flex-grow-1 mx-2 electric-red">
+            <div class="d-flex flex-column align-items-start mx-2 electric-red skill-box">
               <div class="skill-bar" aria-hidden="true">
-                <div class="skill-fill" style="width:55%" data-perc="55"></div>
+                <div class="skill-fill" style="width:75%" data-perc="75" data-level="adv"></div>
               </div>
+              <div class="skill-perc skill-adv">Avançado</div>
             </div>
-            <div class="skill-stars" data-perc="55"></div>
+          </div>
+          <!-- Additional skills: Coding, VS Code, GitHub -->
+          <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="Programação e práticas de desenvolvimento.">
+            <img src="https://img.icons8.com/color/28/source-code.png" alt="Coding" class="me-2">
+            <span class="skill-name">Coding</span>
+            <div class="d-flex flex-column align-items-start mx-2 skill-box" >
+              <div class="skill-bar" aria-hidden="true">
+                <div class="skill-fill" style="width:80%" data-perc="80" data-level="adv"></div>
+              </div>
+              <div class="skill-perc skill-adv">Avançado</div>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="Editor de código - VS Code.">
+            <img src="https://img.icons8.com/color/28/visual-studio-code-2019.png" alt="VS Code" class="me-2">
+            <span class="skill-name">VS Code</span>
+            <div class="d-flex flex-column align-items-start mx-2 skill-box" >
+              <div class="skill-bar" aria-hidden="true">
+                <div class="skill-fill" style="width:70%" data-perc="70" data-level="reg"></div>
+              </div>
+              <div class="skill-perc skill-reg">Regular</div>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="Controle de versão e repositórios (GitHub).">
+            <img src="https://img.icons8.com/ios-filled/28/000000/github.png" alt="GitHub" class="me-2">
+            <span class="skill-name">GitHub</span>
+            <div class="d-flex flex-column align-items-start mx-2 skill-box" >
+              <div class="skill-bar" aria-hidden="true">
+                <div class="skill-fill" style="width:75%" data-perc="75" data-level="adv"></div>
+              </div>
+              <div class="skill-perc skill-adv">Avançado</div>
+            </div>
           </div>
         </div>
       </div>
@@ -309,20 +461,19 @@
       <!-- SOBRE MIM E CERTIFICADOS -->
       <div class="col-12 col-md-7 col-lg-5">
         <div class="card shadow-sm p-4 h-100">
-             <h2 class="mb-3">Vitor de Freitas Morais</h2>
-          <h5 class="mb-3">Sobre Mim</h5>
-          <div class="mb-3" style="font-size:1.08rem;">
+             <h2 class="mb-3 text-center">Vitor de Freitas Morais</h2>
+          <div class="mb-3 text-center mx-auto" style="font-size:1.08rem; max-width:720px;">
             Administrador com perfil analítico e tech, focado em transformar dados em resultados para negócios.
           </div>
           <div class="bg-light rounded-3 p-3 mb-3">
-            <h6 class="fw-bold mb-2">Formação Acadêmica</h6>
-            <div class="d-flex flex-wrap gap-3 align-items-center">
+            <h6 class="fw-bold mb-2 text-center">Formação Acadêmica</h6>
+            <div class="d-flex flex-wrap flex-md-nowrap gap-3 align-items-center justify-content-center">
               <div class="d-flex align-items-center bg-white rounded-pill px-3 py-2 shadow-sm" style="min-width:210px;">
-                <a href="https://vitorfm.work/Grade%20Adm%20Vitor%20Atualizada.jpeg" target="_blank" class="me-2">
+                <a href="img/Grade Adm Vitor Atualizada.jpeg" target="_blank" class="me-2">
                   <img src="https://img.icons8.com/color/48/000000/university.png" alt="Administração" width="28" height="28"/>
                 </a>
                 <div>
-                  <a href="https://vitorfm.work/Grade%20Adm%20Vitor%20Atualizada.jpeg" target="_blank" class="fw-semibold text-decoration-none text-dark">Administração</a>
+                  <a href="img/Grade Adm Vitor Atualizada.jpeg" target="_blank" class="fw-semibold text-decoration-none text-dark">Administração</a>
                   <div class="small text-muted">UFRRJ <span class="badge bg-warning text-dark ms-1">Em andamento</span></div>
                   <div class="small text-secondary">Previsão: 2026/1</div>
                 </div>
@@ -336,21 +487,21 @@
               </div>
             </div>
           </div>
-          <h6 class="fw-bold mb-2">Certificados</h6>
+          <h6 class="fw-bold mb-2 text-center">Certificados</h6>
           <div class="d-flex flex-wrap gap-3 justify-content-center">
-            <a href="https://vitorfm.work/clac%20en.jpg" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Curso de inglês prático e completo (CLAC UFRJ, 400h)">
+            <a href="img/clac en.jpg" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Curso de inglês prático e completo (CLAC UFRJ, 400h)">
               <img src="https://img.icons8.com/color/48/language.png" width="40" alt="Idioma"><br>
               <small>Inglês<br>CLAC UFRJ</small>
             </a>
-            <a href="https://vitorfm.work/Certificado%20Descomplica.png" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Desenvolvimento web com CSS, JavaScript, UX, HTML, design thinking e gestão de projetos (220h, 2023)">
+            <a href="img/Certificado Descomplica.png" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Desenvolvimento web com CSS, JavaScript, UX, HTML, design thinking e gestão de projetos (220h, 2023)">
               <img src="https://img.icons8.com/color/48/source-code.png" width="40" alt="Front-end"><br>
               <small>FrontEnd<br>Descomplica</small>
             </a>
-            <a href="https://vitorfm.work/Conclus%C3%A3o%20Pot%C3%AAncia%20Tech%20IFood.jpg" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Programação do Zero, 32 módulos e desafios práticos em programação (68h, 2024)">
+            <a href="img/Conclusão Potência Tech iFood.jpg" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Programação do Zero, 32 módulos e desafios práticos em programação (68h, 2024)">
               <img src="https://img.icons8.com/color/48/chef-hat.png" width="40" alt="iFood"><br>
               <small>Potência Tech<br>iFood</small>
             </a>
-            <a href="https://vitorfm.work/R37XDBSH.pdf" class="text-center text-decoration-none" target="_blank" data-bs-toggle="tooltip" title="SQL, NoSQL, Power BI e machine learning (68h, 2024)">
+            <a href="pdf/R37XDBSH.pdf" class="text-center text-decoration-none" target="_blank" data-bs-toggle="tooltip" title="SQL, NoSQL, Power BI e machine learning (68h, 2024)">
               <img src="https://img.icons8.com/color/48/python.png" width="40" alt="Python"><br>
               <small>Squadio<br>Analytics</small>
             </a>
@@ -359,31 +510,33 @@
               <small>Google Data<br>Analytics</small><br>
              
             </a>
-            <a href="https://vitorfm.work/LSPILSMF.png" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Desde a coleta e modelagem até a criação de dashboards interativos para tomada de decisões, aplicando ETL, tratamento e storytelling com dados, preparando-os para atuar em áreas como análise de dados, M.I.S. e inteligência de negócios.">
-              <img src="https://vitorfm.work/klabinIA" width="40" alt="Excel e Power BI"><br>
+            <!-- Binance certificate removed from here and reinserted as last certificate to avoid ordering issues -->
+            <a href="img/LSPILSMF.png" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Desde a coleta e modelagem até a criação de dashboards interativos para tomada de decisões, aplicando ETL, tratamento e storytelling com dados, preparando-os para atuar em áreas como análise de dados, M.I.S. e inteligência de negócios. (180h, 2025)">
+              <img src="img/klabinIA" width="40" alt="Excel e Power BI"><br>
               <small>Excel e Power BI <br>Dashboards</small>
             </a>
-            <a href="https://vitorfm.work/DataXPE.pdf" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="O Minicamp Data Beginner da XPE apresenta os fundamentos, carreiras e ferramentas essenciais da área de dados para quem está começando.">
-              <img src="https://vitorfm.work/XPE.png" width="40" alt="XPE"><br>
-              <small>Minicamp<br>Data Miner</small>
-            </a>
-            <a href="https://vitorfm.work/HUO5JUNU.png" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title=" Fluxo de análise de dados com ferramentas como SQL, Excel com copilot, Azure Services e IA, aplicando projetos práticos com ETL, dashboards e machine learning. (104hr, 2025)">
-              <img src="https://vitorfm.work/dio.webp" width="40" alt="DIO"><br>
+            <a href="img/HUO5JUNU.png" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title=" Fluxo de análise de dados com ferramentas como SQL, Excel com copilot, Azure Services e IA, aplicando projetos práticos com ETL, dashboards e machine learning. (104hr, 2025)">
+              <img src="img/dio.webp" width="40" alt="DIO"><br>
               <small>Dio Randstad <br>Análise de Dados</small><br>
               
             </a>
             
-            <a href="https://vitorfm.work/VITOR%20DE%20FREITAS%20MORAIS.pdf" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Curso de Qualificação Profissional em Inovação e Design Thinking (180h, 2025)">
-                <img src="https://vitorfm.work/e18c7813-3115-4def-819f-0a277644516a.png" width="40" alt="Inovação e Design Thinking"><br>
+            <a href="pdf/VITOR DE FREITAS MORAIS.pdf" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Curso de Qualificação Profissional em Inovação e Design Thinking (180h, 2025)">
+                <img src="img/e18c7813-3115-4def-819f-0a277644516a.png" width="40" alt="Inovação e Design Thinking"><br>
                 <small>Inovação </br>e Design </br>Thinking</small><br>
             </a>
 
             
 
             
-            <a href="https://vitorfm.work/Estatística_conceitos_e_representações-Certificado_250728_153957%5B1%5D.pdf" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Curso Estatística: conceitos e representações – IFRS (20h, 2025)">
-              <img src="https://vitorfm.work/44b8ca65-a423-406d-bc1a-7e77a59feaf0.png" width="40" alt="Estatística"><br>
-              <small>IFRS<br>Estatística</small><br>
+            <a href="pdf/Estatística_conceitos_e_representações-Certificado_250728_153957[1].pdf" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Curso Estatística: conceitos e representações – IFRS (20h, 2025)">
+              <img src="img/44b8ca65-a423-406d-bc1a-7e77a59feaf0.png" width="40" alt="Estatística"><br>
+              <small>IFRS<br>Estatística</small></br>
+            </a>
+            
+                        <a href="https://web.dio.me/track/bootcamp-blockchain-developer-with-solidity-2025" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Binance - Blockchain Developer (Bootcamp) - Em andamento">
+              <img src="img/Binance - Blockchain Developer.webp" width="40" alt="Binance - Blockchain Developer"><br>
+              <small>Binance<br>Blockchain<br> Dev</small></br>
             </a>
 
             
@@ -404,7 +557,7 @@
               </h2>
               <div id="exp1" class="accordion-collapse collapse" data-bs-parent="#experienciaAccordion">
                 <div class="accordion-body">
-                  Atuei com suporte técnico e manutenção de hardware para otimizar a infraestrutura da empresa publicitária.
+                  Suporte técnico e manutenção de hardware para otimizar a infraestrutura da empresa publicitária.
                 </div>
               </div>
             </div>
@@ -455,13 +608,13 @@
                   Suporte em Business Intelligence, realizando análises, dashboards e cruzamento de dados de sistemas para gerar insights e apoiar decisões estratégicas na área de cobrança com  
                   <span class="hover-text">
                     Visualização de Dados.
-                    <img src="visu.png" alt="Preview">
+                    <img src="img/visu.png" alt="Preview">
                   </span>
                 </div>
               </div>
             </div>
           </div>
-          <h5 class="mb-2">Contato: Vitor de Freitas</h5>
+          <h5 class="mb-2">Contato:</h5>
           <ul class="list-unstyled mb-0">
             <li>
               <img src="https://img.icons8.com/color/20/whatsapp.png" alt="WhatsApp">
@@ -613,26 +766,34 @@
     });
   </script>
   <script>
-    // Generate star ratings based on data-perc
-    document.addEventListener('DOMContentLoaded', function(){
-      document.querySelectorAll('.skill-stars').forEach(function(el) {
-        const perc = parseInt(el.getAttribute('data-perc'));
-        const fullStars = Math.floor(perc / 20);
-        const halfStar = (perc % 20) >= 10 ? 1 : 0;
-        const emptyStars = 5 - fullStars - halfStar;
-        let stars = '';
-        for (let i = 0; i < fullStars; i++) stars += '<i class="fas fa-star"></i>';
-        if (halfStar) stars += '<i class="fas fa-star-half-alt"></i>';
-        for (let i = 0; i < emptyStars; i++) stars += '<i class="far fa-star"></i>';
-        el.innerHTML = stars;
-      });
-    });
-  </script>
-  <script>
     // Ativar tooltips Bootstrap em todos os elementos marcados
     var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
       return new bootstrap.Tooltip(tooltipTriggerEl, {html: true});
+    });
+  </script>
+  <script>
+    // Theme toggle functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const themeToggle = document.getElementById('theme-toggle');
+      const body = document.body;
+
+      // Check for saved theme preference or default to light
+      const currentTheme = localStorage.getItem('theme') || 'light';
+      if (currentTheme === 'dark') {
+        body.classList.add('dark-theme');
+        themeToggle.textContent = '☀️';
+      } else {
+        themeToggle.textContent = '🌙';
+      }
+
+      // Toggle theme on button click
+      themeToggle.addEventListener('click', function() {
+        body.classList.toggle('dark-theme');
+        const isDark = body.classList.contains('dark-theme');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        themeToggle.textContent = isDark ? '☀️' : '🌙';
+      });
     });
   </script>
 </body>
