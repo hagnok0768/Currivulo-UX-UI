@@ -72,6 +72,29 @@
   body.dark-theme .card .accordion-button .duration { color: rgba(255,255,255,0.75); }
   @media (max-width: 420px) { .accordion-button .role-title { white-space: normal; } }
 
+  /* Make accordion caret/chevron brighter and more readable in dark theme */
+  .accordion-button::after {
+    /* replace default caret with a high-contrast white chevron using an inline data-URI SVG */
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M6 9l6 6 6-6' stroke='%23ffffff' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 1.1rem 1.1rem;
+    width: 1.6rem; height: 1.6rem; /* give it a slightly larger clickable area */
+    margin-left: 0.5rem; /* keep space from content */
+    opacity: 1 !important;
+    filter: none !important;
+    transition: transform 160ms ease, opacity 160ms ease, filter 160ms ease;
+    /* preserve Bootstrap rotation behavior (collapsed/expanded) */
+    transform-origin: center;
+  }
+  /* stronger effect specifically in dark theme and inside cards for contrast */
+  body.dark-theme .card .accordion-button::after,
+  body.dark-theme .accordion-button::after {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M6 9l6 6 6-6' stroke='%23ffffff' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    opacity: 1 !important;
+    background-size: 1.15rem 1.15rem;
+  }
+
     .hover-text:hover img {
       display: block;
     }
@@ -245,6 +268,16 @@
   body.dark-theme .skill-fill[data-level="adv"] { --glow-color: rgba(29,185,84,0.70); box-shadow: 0 0 40px var(--glow-color), inset 0 -3px 10px rgba(0,0,0,0.6); }
   body.dark-theme .skill-fill[data-level="reg"] { --glow-color: rgba(244,180,0,0.58); box-shadow: 0 0 36px var(--glow-color), inset 0 -3px 10px rgba(0,0,0,0.6); }
   body.dark-theme .skill-fill[data-level="bas"] { --glow-color: rgba(255,138,0,0.58); box-shadow: 0 0 36px var(--glow-color), inset 0 -3px 10px rgba(0,0,0,0.6); }
+  </style>
+  <style>
+    /* Profile image + description layout (match default.php) */
+    .profile-row { display:flex; align-items:center; gap:12px; justify-content:flex-start; }
+    .profile-pic { width:72px; height:72px; object-fit:cover; border-radius:50%; flex:0 0 72px; }
+    .profile-desc { text-align:left; }
+    @media (max-width:576px) {
+      .profile-row { flex-direction:column; text-align:center; align-items:center; }
+      .profile-desc { text-align:center; }
+    }
   </style>
 </head>
 <body class="dark-theme">
@@ -453,8 +486,9 @@
       <div class="col-12 col-md-7 col-lg-5">
         <div class="card shadow-sm p-4 h-100">
             <h2 class="mb-3 text-center">Vitor de Freitas Morais</h2>
-            <div class="mb-3 text-center mx-auto" style="font-size:1.08rem; max-width:720px;">
-              Administrator with an analytical and tech profile, focused on turning data into business results.
+            <div class="mb-3 profile-row mx-auto" style="font-size:1.08rem; max-width:720px;">
+              <img src="img/Vitor.png" alt="Vitor" class="profile-pic">
+              <div class="profile-desc">Administrator with an analytical and tech profile, focused on turning data into business results.</div>
             </div>
           <div class="bg-light rounded-3 p-3 mb-3">
             <h6 class="fw-bold mb-2 text-center">Education</h6>
@@ -488,7 +522,7 @@
               <img src="https://img.icons8.com/color/48/source-code.png" width="40" alt="Front-end"><br>
               <small>FrontEnd<br>Descomplica</small>
             </a>
-            <a href="img/Conclusão Potência Tech iFood.jpg" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Programming from Zero, 32 modules and practical programming challenges (68h, 2024)">
+            <a href="img/IFood.jpg" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Programming from Zero, 32 modules and practical programming challenges (68h, 2024)">
               <img src="https://img.icons8.com/color/48/chef-hat.png" width="40" alt="iFood"><br>
               <small>Potência Tech<br>iFood</small>
             </a>
@@ -810,7 +844,7 @@
         var certs = [
           {href:'img/clac en.jpg', img:'https://img.icons8.com/color/48/language.png', alt:'CLAC Inglês', short:'Practical English', hours:'400h', full:'Comprehensive English course (CLAC UFRJ, 400h)'},
           {href:'img/Certificado Descomplica.png', img:'https://img.icons8.com/color/48/source-code.png', alt:'Front-end', short:'Front-End', hours:'220h', full:'Web development with CSS, JavaScript, UX, HTML, design thinking and project management (220h, 2023)'},
-          {href:'img/Conclusão Potência Tech iFood.jpg', img:'https://img.icons8.com/color/48/chef-hat.png', alt:'iFood', short:'Programming', hours:'68h', full:'Programming from Zero, 32 modules and practical programming challenges (68h, 2024)'},
+          {href:'img/IFood.jpg', img:'https://img.icons8.com/color/48/chef-hat.png', alt:'iFood', short:'Programming', hours:'68h', full:'Programming from Zero, 32 modules and practical programming challenges (68h, 2024)'},
           {href:'pdf/R37XDBSH.pdf', img:'https://img.icons8.com/color/48/python.png', alt:'Squadio', short:'Data & BI', hours:'68h', full:'SQL, NoSQL, Power BI and machine learning (68h, 2024)'},
           {href:'https://www.coursera.org/account/accomplishments/verify/86TY6U736SMU', img:'https://img.icons8.com/color/48/google-logo.png', alt:'Google Data', short:'Data Analytics', hours:'---', full:'Google Data Analytics (Coursera)'},
           {href:'img/LSPILSMF.png', img:'img/klabinIA', alt:'Excel e Power BI', short:'Dashboards', hours:'180h', full:'From data collection and modeling to interactive dashboards for decision-making, applying ETL, cleaning and data storytelling. (180h, 2025)'},
@@ -898,10 +932,10 @@
   // follow Ligg pattern: short inline duration label (e.g. "17 anos") with same success styling
   // include '• Atual' to indicate ongoing role and align to the right via ms-auto in the markup
   if (years > 0) {
-          // show as two lines: "17 years" then "Current"
-          el.innerHTML = years + (years === 1 ? ' year' : ' years') + '<br><span class="fw-semibold small">Current</span>';
+          // show as single line in English, keep number + unit together using non-breaking space
+          el.textContent = years + '\u00A0' + (years === 1 ? 'year' : 'years');
         } else {
-          el.innerHTML = '—';
+          el.textContent = '—';
         }
       }catch(e){ console.error('calc marketplace years', e); }
     })();
