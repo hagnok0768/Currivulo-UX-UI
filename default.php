@@ -179,6 +179,72 @@
   }
   </style>
   <style>
+    /* Aumenta espaço interno dos acordeões de certificados e projetos
+       para comportar mais uma linha de itens quando expandido. */
+    #certAccordion .accordion-collapse .accordion-body {
+      min-height: 380px; /* garante espaço vertical para mais uma linha */
+      max-height: 640px; /* evita estourar a página - permite rolagem */
+      overflow-y: auto;
+      padding-bottom: 12px;
+    }
+    /* Projetos deve ser mais compacto e alinhado: largura fixa por item
+       - imagens padronizadas, legendas com máximo de 2 linhas e ellipsis
+       - cada item tem altura mínima para manter linhas alinhadas
+    */
+    #projetosAccordion .accordion-collapse .accordion-body {
+      min-height: 180px;
+      max-height: 420px;
+      overflow-y: auto;
+      padding-bottom: 8px;
+    }
+    /* Ajuste fino do grid para espaçamento consistente */
+    .cert-grid { gap: 12px; }
+
+    /* Projetos: layout estável por item para evitar texto deslocado */
+    #projetosAccordion .cert-grid { gap: 22px !important; row-gap: 18px !important; column-gap: 28px !important; justify-content: center; }
+    #projetosAccordion .cert-grid .cert-item {
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:flex-start;
+      padding:8px 6px;
+      width:140px;           /* largura fixa para alinhamento */
+      min-height:180px;      /* mantém baseline entre itens */
+      box-sizing:border-box;
+    }
+    /* imagens menores e com margem consistente */
+    #projetosAccordion .cert-grid .cert-item img {
+      width:96px !important;
+      height:96px !important;
+      object-fit:contain !important;
+      display:block;
+      margin:0 auto 10px !important;
+    }
+    /* legendas limitadas a 2 linhas e truncadas com ellipsis para evitar quebra irregular */
+    #projetosAccordion .cert-grid .caption {
+      font-size:0.85rem;
+      text-align:center;
+      margin:0;
+      line-height:1.1;
+      font-weight:600;
+      letter-spacing:0.2px;
+      color:#222;
+      width:120px;
+      max-width:100%;
+      display:-webkit-box;
+      line-clamp:2;
+      -webkit-line-clamp:2;
+      -webkit-box-orient:vertical;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      min-height:2.4em; /* reserva altura para 2 linhas */
+    }
+    #projetosAccordion .cert-grid .hours { text-align:center; font-size:0.75rem; color:#6c757d; margin-top:6px; }
+    /* Dark theme overrides */
+    body.dark-theme #projetosAccordion .cert-grid .caption { color: rgba(255,255,255,0.92); }
+    body.dark-theme #projetosAccordion .cert-grid .hours { color: rgba(255,255,255,0.65); }
+  </style>
+  <style>
     /* Profile image and layout for middle card */
     .profile-row { display:flex; align-items:center; gap:16px; justify-content:flex-start; max-width:720px; margin:0 auto; }
     .profile-row .profile-pic {
@@ -281,6 +347,25 @@
   body.dark-theme .skill-fill[data-level="reg"] { --glow-color: rgba(244,180,0,0.58); box-shadow: 0 0 36px var(--glow-color), inset 0 -3px 10px rgba(0,0,0,0.6); }
   body.dark-theme .skill-fill[data-level="bas"] { --glow-color: rgba(255,138,0,0.58); box-shadow: 0 0 36px var(--glow-color), inset 0 -3px 10px rgba(0,0,0,0.6); }
   </style>
+  <style>
+    /* Glow effect target for the English skill when hovering the English certificate */
+    #skill-ingles.glow {
+      color: #1db954; /* match adv green used in the skill-fill gradient */
+      text-shadow: 0 0 6px rgba(29,185,84,0.95), 0 0 16px rgba(29,185,84,0.55);
+      transition: color 220ms ease, text-shadow 220ms ease;
+    }
+  body.dark-theme #skill-ingles.glow { color: #1db954 !important; text-shadow: 0 0 6px rgba(29,185,84,0.95), 0 0 16px rgba(29,185,84,0.55) !important; }
+
+    @keyframes skillGlowPulse {
+      0% { text-shadow: 0 0 4px rgba(29,185,84,0.6); }
+      50% { text-shadow: 0 0 12px rgba(29,185,84,0.95); }
+      100% { text-shadow: 0 0 4px rgba(29,185,84,0.6); }
+    }
+    /* optional pulsing variant (added by JS briefly for emphasis) */
+    #skill-ingles.glow.pulse { animation: skillGlowPulse 1.1s ease-in-out 0s 1; }
+    /* extra selector with higher specificity in case .skill-name or body.dark-theme rules are stronger */
+    span.skill-name#skill-ingles.glow { color: #1db954 !important; text-shadow: 0 0 6px rgba(29,185,84,0.95), 0 0 16px rgba(29,185,84,0.55) !important; }
+  </style>
 </head>
 <body class="dark-theme">
   <!-- NAVBAR -->
@@ -310,14 +395,14 @@
   <div class="container-fluid py-4">
     <div class="row g-4 justify-content-center">
       <!-- HABILIDADES -->
-      <div class="col-12 col-md-5 col-lg-3">
+      <div class="col-12 col-md-5 col-lg-3 order-skills-mobile">
         <div class="card shadow-sm p-3 h-100 skills-card">
           <h5 class="mb-3">Habilidades</h5>
           
                     <!-- Inglês ~74% => ★★★★☆ (4.0) -->
           <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="Inglês avançado: leitura, escrita, fala e ambiente de negócios.">
             <img src="https://img.icons8.com/color/28/usa.png" alt="Inglês" class="me-2">
-            <span class="skill-name">Inglês</span>
+            <span id="skill-ingles" class="skill-name">Inglês</span>
             <div class="d-flex flex-column align-items-start mx-2 electric-blue skill-box" style="width: 140px; flex-shrink: 0;">
               <div class="skill-bar" aria-hidden="true">
                 <div class="skill-fill" style="width:74%" data-perc="74" data-level="adv"></div>
@@ -336,6 +421,39 @@
                 <div class="skill-fill" style="width:60%" data-perc="60" data-level="reg"></div>
               </div>
               <div class="skill-perc skill-reg">Regular</div>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="Neo4j para modelagem de relacionamentos em grafos e análise de dados conectados.">
+            <img src="img/NEO4J.png" alt="Neo4J" class="me-2" style="width:28px; height:28px; object-fit:contain;">
+            <span class="skill-name">Neo4J</span>
+            <div class="d-flex flex-column align-items-start mx-2 electric-gold skill-box" style="width: 140px; flex-shrink: 0;">
+              <div class="skill-bar" aria-hidden="true">
+                <div class="skill-fill" style="width:60%" data-perc="60" data-level="reg"></div>
+              </div>
+              <div class="skill-perc skill-reg">Regular</div>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="Coolify para deploy e gerenciamento de aplicações self-hosted.">
+            <img src="img/coolify-logo.svg" alt="Coolify" class="me-2" style="width:28px; height:28px; object-fit:contain;">
+            <span class="skill-name">Coolify</span>
+            <div class="d-flex flex-column align-items-start mx-2 electric-gold skill-box" style="width: 140px; flex-shrink: 0;">
+              <div class="skill-bar" aria-hidden="true">
+                <div class="skill-fill" style="width:75%" data-perc="75" data-level="adv"></div>
+              </div>
+              <div class="skill-perc skill-adv">Avançado</div>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="OpenClaw para automações e fluxos com ferramentas open source.">
+            <img src="img/open,claw.png" alt="OpenClaw" class="me-2" style="width:28px; height:28px; object-fit:contain;">
+            <span class="skill-name">OpenClaw</span>
+            <div class="d-flex flex-column align-items-start mx-2 electric-gold skill-box" style="width: 140px; flex-shrink: 0;">
+              <div class="skill-bar" aria-hidden="true">
+                <div class="skill-fill" style="width:75%" data-perc="75" data-level="adv"></div>
+              </div>
+              <div class="skill-perc skill-adv">Avançado</div>
             </div>
           </div>
 
@@ -485,7 +603,7 @@
       </div>
 
       <!-- SOBRE MIM E CERTIFICADOS -->
-      <div class="col-12 col-md-7 col-lg-5">
+      <div class="col-12 col-md-7 col-lg-5 order-main-mobile">
         <div class="card shadow-sm p-4 h-100">
              <h2 class="mb-3 text-center">Vitor de Freitas Morais</h2>
           <div class="mb-3 profile-row mx-auto" style="font-size:1.08rem; max-width:720px;">
@@ -502,21 +620,21 @@
                 <div>
                   <a href="img/Grade Adm Vitor Atualizada.jpeg" target="_blank" class="fw-semibold text-decoration-none text-dark">Administração</a>
                   <div class="small text-muted">UFRRJ <span class="badge bg-warning text-dark ms-1">Em andamento</span></div>
-                  <div class="small text-secondary">Previsão: 2026/1</div>
+                  <div class="small text-secondary">Previsão: 2026/2</div>
                 </div>
               </div>
               <div class="d-flex align-items-center bg-white rounded-pill px-3 py-2 shadow-sm" style="min-width:210px;">
                 <img src="https://img.icons8.com/color/48/000000/engineering.png" alt="Engenharia da Computação" width="28" height="28" class="me-2"/>
                 <div>
                   <span class="fw-semibold">Eng. da Computação</span>
-                  <div class="small text-muted">UERJ</div>
+                  <div class="small text-muted">UERJ <span class="badge text-dark ms-1" style="background-color:#ff9800 !important;background-image:none !important;box-shadow:none !important;border:none !important;font-size:0.56rem;padding:0.06rem 0.18rem;line-height:1;vertical-align:middle;border-radius:0.28rem;" data-bs-toggle="tooltip" title="Base analítica sólida. A engenharia me deu o rigor lógico e a disciplina matemática que hoje aplico na arquitetura de códigos e soluções escaláveis em Web3.">Interrompido</span></div>
                 </div>
               </div>
             </div>
           </div>
           <h6 class="fw-bold mb-2 text-center">Certificados e Cursos</h6>
           <div class="d-flex flex-wrap gap-3 justify-content-center">
-            <a href="img/clac en.jpg" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Curso de inglês prático e completo (CLAC UFRJ, 400h)">
+            <a id="cert-ingles" href="img/clac en.jpg" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Curso de inglês prático e completo (CLAC UFRJ, 400h)">
               <img src="https://img.icons8.com/color/48/language.png" width="40" alt="Idioma"><br>
               <small>Inglês<br>CLAC UFRJ</small>
             </a>
@@ -556,18 +674,77 @@
             
 
             
-            <a href="pdf/Estatística_conceitos_e_representações-Certificado_250728_153957[1].pdf" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Curso Estatística: conceitos e representações – IFRS (20h, 2025)">
+            <a href="pdf/Estatística_conceitos_e_representações-Certificado_250728_153957[1].pdf" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="IFRGS - Estatística: conceitos e representações (20h, 2025)">
               <img src="img/44b8ca65-a423-406d-bc1a-7e77a59feaf0.png" width="40" alt="Estatística"><br>
-              <small>IFRS<br>Estatística</small></br>
+              <small>IFRGS - Estatística: conceitos e representações</small></br>
+            </a>
+
+            <a href="https://web.dio.me/track/neo4j-analise-de-dados-com-grafos" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="DIO - Neo4j: análise de dados com grafos (Em andamento)">
+              <img src="img/Neo4J.webp" width="40" alt="DIO Neo4j"><br>
+              <small>DIO<br>Neo4j - Grafos<br><span class="badge bg-warning text-dark">Em andamento</span></small></br>
+            </a>
+
+            <a href="https://graphacademy.neo4j.com/c/2815b84d-493b-4914-be4a-2819f6593b39/" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Certificação oficial Neo4j concluída na GraphAcademy.">
+              <img src="img/NEO4J.png" width="40" alt="Neo4j"><br>
+              <small>Neo4j<br>Certificação<br><span class="badge bg-success">Concluído</span></small></br>
             </a>
             
-                        <a href="https://web.dio.me/track/bootcamp-blockchain-developer-with-solidity-2025" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Binance - Blockchain Developer (Bootcamp) - Em andamento">
-              <img src="img/Binance - Blockchain Developer.webp" width="40" alt="Binance - Blockchain Developer"><br>
-              <small>Binance<br>Blockchain<br> Dev</small></br>
-            </a>
+                        <a href="pdf/XTRPVXCO.pdf" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" data-bs-html="true" title="&lt;strong&gt;Binance - Blockchain Developer (Bootcamp)&lt;/strong&gt;&lt;br&gt;Concluído — 40h&lt;br&gt;&lt;br&gt;&lt;strong&gt;Conhecimentos adquiridos:&lt;/strong&gt;&lt;ul style='margin:4px 0 0 16px;padding:0'&gt;&lt;li style='color:#1db954'&gt;✓ Blockchain&lt;/li&gt;&lt;li style='color:#1db954'&gt;✓ Solidity&lt;/li&gt;&lt;li style='color:#1db954'&gt;✓ Git&lt;/li&gt;&lt;li style='color:#1db954'&gt;✓ GitHub&lt;/li&gt;&lt;li style='color:#1db954'&gt;✓ Web3&lt;/li&gt;&lt;/ul&gt;">
+                          <img src="img/Binance - Blockchain Developer.webp" width="40" alt="Binance - Blockchain Developer"><br>
+                          <small>Binance<br>Blockchain Dev<br><span class="text-muted">40h</span><br><span class="badge bg-success">Concluído</span></small></br>
+                        </a>
+
+            
 
             
           </div>
+                      <!-- NOVA SEÇÃO: Projetos -->
+                      <h6 class="fw-bold mb-2 text-center mt-3">Projetos</h6>
+                      <div class="accordion mb-3" id="projetosAccordion">
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" id="projHeading">
+                            <button class="accordion-button collapsed d-flex align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#projCollapse" aria-expanded="false" aria-controls="projCollapse">
+                              <!-- mini-icons container (styled like certificates small icons) -->
+                              <div class="cert-btn-icons d-flex flex-wrap align-items-center" style="gap:8px;align-items:center;">
+                                <a href="https://myenglishbook.com/" target="_blank" class="d-inline-block" title="My English Book" style="padding:2px;">
+                                  <img src="img/favicon-32x32.png" alt="My English Book" style="width:28px;height:28px;object-fit:contain;display:block">
+                                </a>
+                                <a href="https://ligg.site" target="_blank" class="d-inline-block" title="Ligg - Demo" style="padding:2px;">
+                                  <img src="img/ligg-logo.png" alt="Ligg" style="width:28px;height:28px;object-fit:contain;display:block">
+                                </a>
+                                <a href="https://meisimples.site/" target="_blank" class="d-inline-block" title="MEI - simples" style="padding:2px;">
+                                  <img src="img/meisimples.webp" alt="MEIsimples" style="width:28px;height:28px;object-fit:contain;display:block">
+                                </a>
+                                
+                              </div>
+                              <span class="cert-btn-text ms-2" style="display:none"></span>
+                            </button>
+                          </h2>
+                          <div id="projCollapse" class="accordion-collapse collapse" data-bs-parent="#projetosAccordion">
+                            <div class="accordion-body">
+                              <!-- projects grid follows the same compact layout as 'Certificados e Cursos' -->
+                              <div class="cert-grid d-flex flex-wrap justify-content-center">
+                                <a href="https://myenglishbook.com/" id="proj-myeb" target="_blank" class="cert-item text-center text-decoration-none" data-bs-toggle="tooltip" data-bs-html="true" title="&lt;strong&gt;My English Book&lt;/strong&gt;&lt;br&gt;Site para ensinar inglês a nativos em diversas línguas de graça, popularizando o inglês com uso de IA verticalizada.&lt;br&gt;&lt;strong&gt;Tecnologias:&lt;/strong&gt; HTML, PHP, CSS, JS">
+                                  <img src="img/logoMEB.png" alt="My English Book" style="width:112px;height:112px;object-fit:contain;display:block;margin:0 auto 12px;"><div class="caption">My English Book</div>
+                                  <div class="hours"></div>
+                                </a>
+
+                                <a href="https://ligg.site" id="proj-ligg" target="_blank" class="cert-item text-center text-decoration-none" data-bs-toggle="tooltip" data-bs-html="true" title="&lt;strong&gt;Ligg - Demo&lt;/strong&gt;&lt;br&gt;Demonstração da ferramenta interna para análise, planejamento e visualização de dados.&lt;br&gt;&lt;strong&gt;Tecnologias:&lt;/strong&gt; HTML, PHP, CSS, JS">
+                                  <img src="img/ligg-logo.png" alt="Ligg - Demo" style="width:112px;height:112px;object-fit:contain;display:block;margin:0 auto 12px;"><div class="caption">Ligg - Demo</div>
+                                  <div class="hours"></div>
+                                </a>
+
+                                <a href="https://meisimples.site/" id="proj-meisimples" target="_blank" class="cert-item text-center text-decoration-none" data-bs-toggle="tooltip" data-bs-html="true" title="&lt;strong&gt;MEIsimples&lt;/strong&gt;&lt;br&gt;Plataforma para MEIs acompanharem seus gastos, separando CPF e MEI e monitorando entradas de dinheiro.&lt;br&gt;&lt;strong&gt;Tecnologias:&lt;/strong&gt; React, Supabase">
+                                  <img src="img/meisimples.webp" alt="MEIsimples" style="width:112px;height:112px;object-fit:contain;display:block;margin:0 auto 12px;"><div class="caption">MEI - simples</div>
+                                  <div class="hours"></div>
+                                </a>
+
+                                
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
         </div>
       </div>
 
@@ -576,58 +753,27 @@
         <div class="card shadow-sm p-4 h-100">
           <h5 class="mb-3 text-center">Experiência Profissional</h5>
           <div class="accordion mb-4" id="experienciaAccordion">
+              
+            
             <div class="accordion-item">
               <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#exp1">
-                  <a href="https://advti-infor.com.br/site/" target="_blank" class="company-link me-2" onclick="event.stopPropagation()">ADV (NBS)</a>
+                <button class="accordion-button collapsed text-success fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#exp6">
+                  <a href="http://ligg.site/" target="_blank" class="company-link me-2" onclick="event.stopPropagation()">Ligg Contact Services</a>
                   <div class="header-left">
-                    <span class="role-title">Estágio em Suporte de Hardware</span>
+                    <span class="role-title">Estágio em BI e Análise de Dados</span>
                   </div>
-                  <span class="duration text-muted small">1 ano (2005)</span>
+                  <span class="duration text-success small no-break">8 meses<br><span class="fw-semibold small">Atual</span></span>
                 </button>
               </h2>
-              <div id="exp1" class="accordion-collapse collapse" data-bs-parent="#experienciaAccordion">
-                <div class="accordion-body">
-                  <p>Prestei suporte técnico completo e manutenção de hardware, atuando desde a configuração e monitoramento de redes até o diagnóstico e correção de falhas.</p>
-                  <p>Otimizei a disponibilidade e desempenho da infraestrutura, implementei rotinas de manutenção preventiva, coordenei atualizações de equipamentos e documentei procedimentos para reduzir o tempo de inatividade e acelerar a resolução de incidentes.</p>
+              <div id="exp6" class="accordion-collapse collapse" data-bs-parent="#experienciaAccordion">
+                <div class="accordion-body text-success">
+                  <p>Suporte em Business Intelligence, realizando análises, dashboards e cruzamento de dados de sistemas para gerar insights e apoiar decisões estratégicas na área de cobrança, com foco em <span class="hover-text">Visualização de Dados.<img src="img/visu.png" alt="Preview"></span></p>
+                  <p>Desenvolvi internamente uma ferramenta web para acompanhamento, planejamento e análise preventiva, preditiva e prescritiva, que complementa as ações de cobrança — acesse: <a href="https://ligg.site/intra2/pnop.php" target="_blank" rel="noopener" class="company-link">Demonstração da Ferramenta</a>.</p>
                 </div>
               </div>
-            </div>
-            <div class="accordion-item">
-              <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#exp3">
-                  <a href="https://www.pixsoft.com.br/" target="_blank" class="company-link me-2" onclick="event.stopPropagation()">Pix Soft (DeMillus)</a>
-                  <div class="header-left">
-                    <span class="role-title">Estágio em Desenvolvimento de Software</span>
-                  </div>
-                  <span class="duration text-muted small">1 ano (2006)</span>
-                </button>
-              </h2>
-              <div id="exp3" class="accordion-collapse collapse" data-bs-parent="#experienciaAccordion">
-                <div class="accordion-body">
-                  <p>Desenvolvi e mantive aplicações internas em VB integradas a bases de dados SQL, criando consultas otimizadas, procedures e automações que aceleraram a extração e tratamento de dados para análise.</p>
-                  <p>Entreguei relatórios gerenciais e dashboards para diretoria e gerência, traduzi requisitos de negócio em soluções técnicas, coordenei atualizações de versão e testes e implementei melhorias que aumentaram a confiabilidade das informações e a agilidade na tomada de decisão.</p>
-                </div>
-              </div>
-            </div>
-            <div class="accordion-item">
-              <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#exp4">
-                  <a href="https://central.dbtrans.com.br/" target="_blank" class="company-link me-2" onclick="event.stopPropagation()">DB Trans</a>
-                  <div class="header-left">
-                    <span class="role-title">Estágio em Desenvolvimento de Software</span>
-                  </div>
-                  <span class="duration text-muted small">1 ano (2007)</span>
-                </button>
-              </h2>
-              <div id="exp4" class="accordion-collapse collapse" data-bs-parent="#experienciaAccordion">
-                <div class="accordion-body">
-                  <p>Desenvolvi soluções backend em ASP.NET, implementando serviços e endpoints para integração com sistemas de cobrança e com fluxos baseados em XML, garantindo troca segura e confiável de informações entre plataformas.</p>
-                  <p>Modelei bases de dados e otimizei consultas SQL, criei rotinas de automação e transformação de arquivos XML, e colaborei com operações para testar e implantar atualizações que reduziram falhas de processamento e melhoraram a rastreabilidade das transações.</p>
-                </div>
-              </div>
-            </div>
-            <div class="accordion-item">
+            </div>  
+            
+                        <div class="accordion-item">
               <h2 class="accordion-header">
                 <button class="accordion-button collapsed text-success fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#exp5">
                   <span class="company-link me-2">Autônomo</span>
@@ -645,23 +791,64 @@
                 </div>
               </div>
             </div>
+              
             <div class="accordion-item">
               <h2 class="accordion-header">
-                <button class="accordion-button collapsed text-success fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#exp6">
-                  <a href="http://ligg.site/" target="_blank" class="company-link me-2" onclick="event.stopPropagation()">Ligg Contact Services</a>
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#exp4">
+                  <a href="https://central.dbtrans.com.br/" target="_blank" class="company-link me-2" onclick="event.stopPropagation()">DB Trans</a>
                   <div class="header-left">
-                    <span class="role-title">Estágio em BI e Análise de Dados</span>
+                    <span class="role-title">Estágio em Desenvolvimento de Software</span>
                   </div>
-                  <span class="duration text-success small no-break">4 meses<br><span class="fw-semibold small">Atual</span></span>
+                  <span class="duration text-muted small">1 ano (2007)</span>
                 </button>
               </h2>
-              <div id="exp6" class="accordion-collapse collapse" data-bs-parent="#experienciaAccordion">
-                <div class="accordion-body text-success">
-                  <p>Suporte em Business Intelligence, realizando análises, dashboards e cruzamento de dados de sistemas para gerar insights e apoiar decisões estratégicas na área de cobrança, com foco em <span class="hover-text">Visualização de Dados.<img src="img/visu.png" alt="Preview"></span></p>
-                  <p>Desenvolvi internamente uma ferramenta web para acompanhamento, planejamento e análise preventiva, preditiva e prescritiva, que complementa as ações de cobrança — acesse: <a href="https://ligg.site/intra2/pnop.php" target="_blank" rel="noopener" class="company-link">Demonstração da Ferramenta</a>.</p>
+              <div id="exp4" class="accordion-collapse collapse" data-bs-parent="#experienciaAccordion">
+                <div class="accordion-body">
+                  <p>Desenvolvi soluções backend em ASP.NET, implementando serviços e endpoints para integração com sistemas de cobrança e com fluxos baseados em XML, garantindo troca segura e confiável de informações entre plataformas.</p>
+                  <p>Modelei bases de dados e otimizei consultas SQL, criei rotinas de automação e transformação de arquivos XML, e colaborei com operações para testar e implantar atualizações que reduziram falhas de processamento e melhoraram a rastreabilidade das transações.</p>
+                </div>
+              </div>
+            </div> 
+            
+            
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#exp3">
+                  <a href="https://www.pixsoft.com.br/" target="_blank" class="company-link me-2" onclick="event.stopPropagation()">Pix Soft (DeMillus)</a>
+                  <div class="header-left">
+                    <span class="role-title">Estágio em Desenvolvimento de Software</span>
+                  </div>
+                  <span class="duration text-muted small">1 ano (2006)</span>
+                </button>
+              </h2>
+              <div id="exp3" class="accordion-collapse collapse" data-bs-parent="#experienciaAccordion">
+                <div class="accordion-body">
+                  <p>Desenvolvi e mantive aplicações internas em VB integradas a bases de dados SQL, criando consultas otimizadas, procedures e automações que aceleraram a extração e tratamento de dados para análise.</p>
+                  <p>Entreguei relatórios gerenciais e dashboards para diretoria e gerência, traduzi requisitos de negócio em soluções técnicas, coordenei atualizações de versão e testes e implementei melhorias que aumentaram a confiabilidade das informações e a agilidade na tomada de decisão.</p>
                 </div>
               </div>
             </div>
+
+
+             
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#exp1">
+                  <a href="https://advti-infor.com.br/site/" target="_blank" class="company-link me-2" onclick="event.stopPropagation()">ADV (NBS)</a>
+                  <div class="header-left">
+                    <span class="role-title">Estágio em Suporte de Hardware</span>
+                  </div>
+                  <span class="duration text-muted small">1 ano (2005)</span>
+                </button>
+              </h2>
+              <div id="exp1" class="accordion-collapse collapse" data-bs-parent="#experienciaAccordion">
+                <div class="accordion-body">
+                  <p>Prestei suporte técnico completo e manutenção de hardware, atuando desde a configuração e monitoramento de redes até o diagnóstico e correção de falhas.</p>
+                  <p>Otimizei a disponibilidade e desempenho da infraestrutura, implementei rotinas de manutenção preventiva, coordenei atualizações de equipamentos e documentei procedimentos para reduzir o tempo de inatividade e acelerar a resolução de incidentes.</p>
+                </div>
+              </div>
+            </div>
+
           </div>
           <h5 class="mb-2">Contato</h5>
           <ul class="list-unstyled mb-0">
@@ -698,6 +885,18 @@
       </filter>
     </defs>
   </svg>
+  <style>
+  @media (max-width: 767.98px) {
+    /* Ensure Vitor de Freitas Morais appears first on small screens */
+    .cert-grid { display:flex; flex-wrap:wrap; }
+    .cert-grid .cert-item.cert-vitor { order: -9999; }
+    .cert-btn-icons a.cert-vitor { order: -9999; }
+    /* On small screens, show the main (middle) module before the skills column */
+    .order-main-mobile { order: -9999; }
+    .order-skills-mobile { order: 0; }
+  }
+  </style>
+
   <script>
     // Animate skill fills from 0 to their data-perc and add electric glow pulses.
     console.log('Electric bars script starting...');
@@ -845,16 +1044,19 @@
         // certificate data (href, image, alt, short two-word desc, hours, full details)
         var certs = [
           {href:'img/clac en.jpg', img:'https://img.icons8.com/color/48/language.png', alt:'CLAC Inglês', short:'Inglês Prático', hours:'400h', full:'Curso de inglês prático e completo (CLAC UFRJ, 400h)'},
-          {href:'img/Certificado Descomplica.png', img:'https://img.icons8.com/color/48/source-code.png', alt:'Front-end', short:'Front-End', hours:'220h', full:'Desenvolvimento web com CSS, JavaScript, UX e HTML (220h)'},
-          {href:'img/IFood.jpg', img:'https://img.icons8.com/color/48/chef-hat.png', alt:'iFood', short:'Programação', hours:'68h', full:'Programação do Zero — 32 módulos e desafios práticos (68h)'},
-          {href:'pdf/R37XDBSH.pdf', img:'https://img.icons8.com/color/48/python.png', alt:'Squadio', short:'Dados & BI', hours:'68h', full:'SQL, NoSQL, Power BI e machine learning (68h)'},
-          {href:'https://www.coursera.org/account/accomplishments/verify/86TY6U736SMU', img:'https://img.icons8.com/color/48/google-logo.png', alt:'Google Data', short:'Data Analytics', hours:'---', full:'Google Data Analytics (ver certificado)'},
-          {href:'img/LSPILSMF.png', img:'img/klabinIA', alt:'Excel e Power BI', short:'Dashboards', hours:'180h', full:'Dashboards e ETL — Excel & Power BI (180h)'},
-          {href:'img/HUO5JUNU.png', img:'img/dio.webp', alt:'DIO', short:'Análise Dados', hours:'104h', full:'Fluxo de análise com SQL, Excel, Azure e IA (104h)'},
-          {href:'pdf/VITOR DE FREITAS MORAIS.pdf', img:'img/e18c7813-3115-4def-819f-0a277644516a.png', alt:'Inovação', short:'Design Thinking', hours:'180h', full:'Qualificação profissional em Inovação e Design Thinking (180h)'},
-          {href:'pdf/Estatística_conceitos_e_representações-Certificado_250728_153957[1].pdf', img:'img/44b8ca65-a423-406d-bc1a-7e77a59feaf0.png', alt:'Estatística', short:'Estatística', hours:'20h', full:'Estatística: conceitos e representações – IFRS (20h)'},
-          {href:'https://web.dio.me/track/bootcamp-blockchain-developer-with-solidity-2025', img:'img/Binance - Blockchain Developer.webp', alt:'Binance', short:'Blockchain', hours:'Em andamento', full:'Binance - Blockchain Developer (Bootcamp) — Em andamento'}
+          {href:'img/Certificado Descomplica.png', img:'https://img.icons8.com/color/48/source-code.png', alt:'Descomplica', short:'Descomplica - Fundamentos do FrontEnd', hours:'220h', full:'Desenvolvimento web com CSS, JavaScript, UX e HTML (220h)'},
+          {href:'img/IFood.jpg', img:'https://img.icons8.com/color/48/chef-hat.png', alt:'iFood', short:'iFood - Programação do Zero', hours:'68h', full:'Princípios da lógica de programação, começando por conceitos introdutórios, desde a exploração de algoritmos, variáveis e estruturas condicionais até a implementação de estruturas de repetição e operadores lógicos e de comparação.'},
+          {href:'pdf/R37XDBSH.pdf', img:'https://img.icons8.com/color/48/python.png', alt:'Squadio', short:'Squadio - Python Data Analytics', hours:'68h', full:'instalação, conceitos de funções Python e os seus principais comandos, dê os primeiros passos em noções importantes de base de dados relacionais e não relacionais (SQL e noSQL)'},
+          {href:'https://www.coursera.org/account/accomplishments/verify/86TY6U736SMU', img:'https://img.icons8.com/color/48/google-logo.png', alt:'Foundations: Data, Data, Everywhere', short:'Foundations: Data, Data, Everywhere', hours:'12h', full:'Define and explain key concepts involved in data analytics including data, data analysis, and data ecosystems.<br><br>Conduct an analytical thinking self assessment giving specific examples of the application of analytical thinking.'},
+          {href:'img/LSPILSMF.png', img:'img/klabinIA', alt:'Klabin - Excel e Power BI Dashboards', short:'Klabin - Excel e Power BI Dashboards', hours:'180h', full:'Desde a coleta e modelagem até a criação de dashboards interativos para tomada de decisões, aplicando ETL, tratamento e storytelling com dados, preparando-os para atuar em áreas como análise de dados, M.I.S. e inteligência de negócios.'},
+          {href:'img/HUO5JUNU.png', img:'img/dio.webp', alt:'Randstad', short:'Randstad - Análise de Dados', hours:'104h', full:'Todo o fluxo de análise de dados com ETL, desde a coleta de dados até sua transformação em insights valiosos, utilizando IA e Machine Learning. Aprenda a utilizar ferramentas de ponta como SQL, Excel e Microsoft Copilot para criar análises que impactam diretamente os negócios.'},
+          {href:'pdf/VITOR DE FREITAS MORAIS.pdf', img:'img/e18c7813-3115-4def-819f-0a277644516a.png', alt:'Inovação', short:'CEDERJ - Design Thinking', hours:'180h', full:'Qualificação profissional em Inovação e Design Thinking (180h)'},
+          {href:'pdf/Estatística_conceitos_e_representações-Certificado_250728_153957[1].pdf', img:'img/44b8ca65-a423-406d-bc1a-7e77a59feaf0.png', alt:'IFRS - Estatística conceitos e representações', short:'IFRGS - Estatística conceitos', hours:'20h', full:'IFRGS - Estatística: conceitos e representação (20h)'},
+          {href:'https://web.dio.me/track/neo4j-analise-de-dados-com-grafos', img:'img/Neo4J.webp', alt:'DIO Neo4j', short:'DIO - Neo4j com Grafos', hours:'51h', status:'Em andamento', full:'Formação da DIO em Neo4j para análise de dados com grafos. Curso em andamento.'},
+          {href:'https://vitorfm.work/img/XTRPVXCO.png', img:'img/Binance - Blockchain Developer.webp', alt:'Binance', short:'Binance - Blockchain Developer', hours:'40 h', full:'<strong>Binance - Blockchain Developer</strong><br>Conceitos de Blockchain e o uso da linguagem Solidity para implementação de contratos inteligentes, criação da sua própria criptomoeda na Rede Ethereum e um NFT temático.'},
+          {href:'https://graphacademy.neo4j.com/c/2815b84d-493b-4914-be4a-2819f6593b39/', img:'img/NEO4J.png', alt:'Neo4J', short:'Neo4J - Certificação', hours:'Concluído', full:'Certificação oficial Neo4j concluída na GraphAcademy.'}
         ];
+        certs.reverse();
 
         // build accordion
         var acc = document.createElement('div'); acc.className = 'accordion mb-3'; acc.id = 'certAccordion';
@@ -874,7 +1076,9 @@
         iconsContainer.style.gap = '6px';
         certs.forEach(function(c){
           var a = document.createElement('a'); a.href = c.href; a.target = '_blank'; a.className = 'd-inline-block'; a.setAttribute('title', c.short + ' — ' + c.hours);
-          var img = document.createElement('img'); img.src = c.img; img.alt = c.alt; img.style.width = '20px'; img.style.height = '20px'; img.style.objectFit = 'cover'; img.style.display = 'block';
+          // mark Vitor link so we can reorder responsively
+          if(c.href && c.href.toUpperCase().indexOf('VITOR') !== -1) a.classList.add('cert-vitor');
+          var img = document.createElement('img'); img.src = c.img; img.alt = c.alt; img.style.width = '20px'; img.style.height = '20px'; img.style.objectFit = 'contain'; img.style.display = 'block';
           a.appendChild(img);
           iconsContainer.appendChild(a);
         });
@@ -895,12 +1099,22 @@
         var detailedGrid = document.createElement('div'); detailedGrid.className = 'cert-grid d-flex flex-wrap justify-content-center';
         certs.forEach(function(c){
           var a = document.createElement('a'); a.href = c.href; a.target = '_blank'; a.className = 'cert-item text-center text-decoration-none';
+          if(c.href && c.href.toUpperCase().indexOf('VITOR') !== -1) a.classList.add('cert-vitor');
           // tooltip with full details (html)
           a.setAttribute('data-bs-toggle','tooltip');
           a.setAttribute('data-bs-html','true');
           a.setAttribute('title', '<strong>' + (c.full || '') + '</strong>');
           var img = document.createElement('img'); img.src = c.img; img.alt = c.alt; img.style.width = '32px'; img.style.height = '32px'; img.style.display='block'; img.style.margin='0 auto 6px';
           var cap = document.createElement('div'); cap.className = 'caption'; cap.innerHTML = (c.short + '<br>');
+          // if the cert has a status (e.g. 'Em andamento'), render a small badge under the caption
+          if(c.status){
+            var badge = document.createElement('span');
+            badge.className = 'badge bg-warning text-dark small';
+            badge.style.display = 'inline-block';
+            badge.style.marginTop = '4px';
+            badge.textContent = c.status;
+            cap.appendChild(badge);
+          }
           var hrs = document.createElement('div'); hrs.className = 'hours'; hrs.textContent = c.hours; hrs.style.color = '#1db954'; hrs.style.fontWeight = '700'; hrs.style.fontSize = '0.8rem';
           a.appendChild(img); a.appendChild(cap); a.appendChild(hrs); detailedGrid.appendChild(a);
         });
@@ -942,6 +1156,32 @@
         }
       }catch(e){ console.error('calc marketplace years', e); }
     })();
+  </script>
+  <script>
+    // Hover/focus effect: when hovering the English certificate, add glow to the 'Inglês' skill label
+    document.addEventListener('DOMContentLoaded', function(){
+      try{
+        var cert = document.getElementById('cert-ingles');
+        var skill = document.getElementById('skill-ingles');
+        if(!cert || !skill) return;
+
+        function addGlow(){
+          skill.classList.add('glow');
+          // briefly add a pulse class to make the glow pop once on mouseenter
+          skill.classList.add('pulse');
+          setTimeout(function(){ skill.classList.remove('pulse'); }, 1100);
+        }
+        function removeGlow(){ skill.classList.remove('glow'); skill.classList.remove('pulse'); }
+
+        cert.addEventListener('mouseenter', addGlow);
+        cert.addEventListener('mouseleave', removeGlow);
+        cert.addEventListener('focus', addGlow);
+        cert.addEventListener('blur', removeGlow);
+
+        // keyboard-accessible: also toggle when using Enter while the anchor is focused
+        cert.addEventListener('keydown', function(e){ if(e.key === 'Enter'){ addGlow(); setTimeout(removeGlow, 1200); } });
+      }catch(e){ console.error('english glow init', e); }
+    });
   </script>
 </body>
 </html>

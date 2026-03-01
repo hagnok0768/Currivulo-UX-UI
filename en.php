@@ -179,11 +179,71 @@
   }
   </style>
   <style>
+    /* Increase inner space of certificates and projects accordions
+       to fit one more row when expanded. */
+    #certAccordion .accordion-collapse .accordion-body {
+      min-height: 380px;
+      max-height: 640px;
+      overflow-y: auto;
+      padding-bottom: 12px;
+    }
+    #projetosAccordion .accordion-collapse .accordion-body {
+      min-height: 180px;
+      max-height: 420px;
+      overflow-y: auto;
+      padding-bottom: 8px;
+    }
+    .cert-grid { gap: 12px; }
+
+    #projetosAccordion .cert-grid { gap: 22px !important; row-gap: 18px !important; column-gap: 28px !important; justify-content: center; }
+    #projetosAccordion .cert-grid .cert-item {
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:flex-start;
+      padding:8px 6px;
+      width:140px;
+      min-height:180px;
+      box-sizing:border-box;
+    }
+    #projetosAccordion .cert-grid .cert-item img {
+      width:96px !important;
+      height:96px !important;
+      object-fit:contain !important;
+      display:block;
+      margin:0 auto 10px !important;
+    }
+    #projetosAccordion .cert-grid .caption {
+      font-size:0.85rem;
+      text-align:center;
+      margin:0;
+      line-height:1.1;
+      font-weight:600;
+      letter-spacing:0.2px;
+      color:#222;
+      width:120px;
+      max-width:100%;
+      display:-webkit-box;
+      line-clamp:2;
+      -webkit-line-clamp:2;
+      -webkit-box-orient:vertical;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      min-height:2.4em;
+    }
+    #projetosAccordion .cert-grid .hours { text-align:center; font-size:0.75rem; color:#6c757d; margin-top:6px; }
+    body.dark-theme #projetosAccordion .cert-grid .caption { color: rgba(255,255,255,0.92); }
+    body.dark-theme #projetosAccordion .cert-grid .hours { color: rgba(255,255,255,0.65); }
+  </style>
+  <style>
     /* Skill box sizing to keep bars uniform */
     .skill-box { width: 140px; min-width: 120px; flex: 0 0 140px; }
     .skill-box .skill-bar { width: 100%; }
     @media (max-width: 576px) {
       .skill-box { width: 110px; min-width: 90px; flex: 0 0 110px; }
+      .order-skills-mobile .d-flex.align-items-center { justify-content: center; gap: 10px; }
+      .order-skills-mobile .skill-box { margin-left: 0; }
+      .order-skills-mobile .skill-name { min-width: 64px; text-align: left; }
     }
   /* adjust .skill-perc positioning (now absolute inside .skill-box) */
   .skill-box { position: relative; }
@@ -279,6 +339,22 @@
       .profile-desc { text-align:center; }
     }
   </style>
+  <style>
+    #skill-ingles.glow {
+      color: #1db954;
+      text-shadow: 0 0 6px rgba(29,185,84,0.95), 0 0 16px rgba(29,185,84,0.55);
+      transition: color 220ms ease, text-shadow 220ms ease;
+    }
+    body.dark-theme #skill-ingles.glow { color: #1db954 !important; text-shadow: 0 0 6px rgba(29,185,84,0.95), 0 0 16px rgba(29,185,84,0.55) !important; }
+
+    @keyframes skillGlowPulse {
+      0% { text-shadow: 0 0 4px rgba(29,185,84,0.6); }
+      50% { text-shadow: 0 0 12px rgba(29,185,84,0.95); }
+      100% { text-shadow: 0 0 4px rgba(29,185,84,0.6); }
+    }
+    #skill-ingles.glow.pulse { animation: skillGlowPulse 1.1s ease-in-out 0s 1; }
+    span.skill-name#skill-ingles.glow { color: #1db954 !important; text-shadow: 0 0 6px rgba(29,185,84,0.95), 0 0 16px rgba(29,185,84,0.55) !important; }
+  </style>
 </head>
 <body class="dark-theme">
   <!-- NAVBAR -->
@@ -308,14 +384,14 @@
   <div class="container-fluid py-4">
     <div class="row g-4 justify-content-center">
       <!-- HABILIDADES -->
-      <div class="col-12 col-md-5 col-lg-3">
-        <div class="card shadow-sm p-3 h-100">
+      <div class="col-12 col-md-5 col-lg-3 order-skills-mobile">
+        <div class="card shadow-sm p-3 h-100 skills-card">
           <h5 class="mb-3">Skills</h5>
           
                     <!-- Inglês ~74% => ★★★★☆ (4.0) -->
           <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="English — advanced: reading, writing, speaking and business communication.">
             <img src="https://img.icons8.com/color/28/usa.png" alt="English" class="me-2">
-            <span class="skill-name">English</span>
+            <span id="skill-ingles" class="skill-name">English</span>
             <div class="d-flex flex-column align-items-start mx-2 electric-blue skill-box" style="width: 140px; flex-shrink: 0;">
               <div class="skill-bar" aria-hidden="true">
                 <div class="skill-fill" style="width:74%" data-perc="74" data-level="adv"></div>
@@ -334,6 +410,39 @@
                 <div class="skill-fill" style="width:60%" data-perc="60" data-level="reg"></div>
               </div>
               <div class="skill-perc skill-reg">Intermediate</div>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="Neo4j graph database for relationship modeling and graph-based data analysis.">
+            <img src="img/NEO4J.png" alt="Neo4J" class="me-2" style="width:28px; height:28px; object-fit:contain;">
+            <span class="skill-name">Neo4J</span>
+            <div class="d-flex flex-column align-items-start mx-2 electric-gold skill-box" style="width: 140px; flex-shrink: 0;">
+              <div class="skill-bar" aria-hidden="true">
+                <div class="skill-fill" style="width:60%" data-perc="60" data-level="reg"></div>
+              </div>
+              <div class="skill-perc skill-reg">Intermediate</div>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="Coolify for self-hosted app deployment and management.">
+            <img src="img/coolify-logo.svg" alt="Coolify" class="me-2" style="width:28px; height:28px; object-fit:contain;">
+            <span class="skill-name">Coolify</span>
+            <div class="d-flex flex-column align-items-start mx-2 electric-gold skill-box" style="width: 140px; flex-shrink: 0;">
+              <div class="skill-bar" aria-hidden="true">
+                <div class="skill-fill" style="width:75%" data-perc="75" data-level="adv"></div>
+              </div>
+              <div class="skill-perc skill-adv">Advanced</div>
+            </div>
+          </div>
+
+          <div class="d-flex align-items-center mb-2" data-bs-toggle="tooltip" title="OpenClaw for open-source automation workflows and AI-powered integrations.">
+            <img src="img/open,claw.png" alt="OpenClaw" class="me-2" style="width:28px; height:28px; object-fit:contain;">
+            <span class="skill-name">OpenClaw</span>
+            <div class="d-flex flex-column align-items-start mx-2 electric-gold skill-box" style="width: 140px; flex-shrink: 0;">
+              <div class="skill-bar" aria-hidden="true">
+                <div class="skill-fill" style="width:75%" data-perc="75" data-level="adv"></div>
+              </div>
+              <div class="skill-perc skill-adv">Advanced</div>
             </div>
           </div>
 
@@ -483,7 +592,7 @@
       </div>
 
       <!-- SOBRE MIM E CERTIFICADOS -->
-      <div class="col-12 col-md-7 col-lg-5">
+      <div class="col-12 col-md-7 col-lg-5 order-main-mobile">
         <div class="card shadow-sm p-4 h-100">
             <h2 class="mb-3 text-center">Vitor de Freitas Morais</h2>
             <div class="mb-3 profile-row mx-auto" style="font-size:1.08rem; max-width:720px;">
@@ -514,7 +623,7 @@
           </div>
           <h6 class="fw-bold mb-2 text-center">Certificates and Courses</h6>
           <div class="d-flex flex-wrap gap-3 justify-content-center">
-              <a href="img/clac en.jpg" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Comprehensive English course (CLAC UFRJ, 400h)">
+              <a id="cert-ingles" href="img/clac en.jpg" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Comprehensive English course (CLAC UFRJ, 400h)">
               <img src="https://img.icons8.com/color/48/language.png" width="40" alt="Idioma"><br>
               <small>English<br>CLAC UFRJ</small>
             </a>
@@ -558,6 +667,16 @@
               <img src="img/44b8ca65-a423-406d-bc1a-7e77a59feaf0.png" width="40" alt="Estatística"><br>
               <small>IFRS<br>Statistics</small></br>
             </a>
+
+            <a href="https://web.dio.me/track/neo4j-analise-de-dados-com-grafos" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="DIO - Neo4j data analysis with graphs (In progress)">
+              <img src="img/Neo4J.webp" width="40" alt="DIO Neo4j"><br>
+              <small>DIO<br>Neo4j Graphs<br><span class="badge bg-warning text-dark">In progress</span></small></br>
+            </a>
+
+            <a href="https://graphacademy.neo4j.com/c/2815b84d-493b-4914-be4a-2819f6593b39/" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Official Neo4j certification completed on GraphAcademy.">
+              <img src="img/NEO4J.png" width="40" alt="Neo4j"><br>
+              <small>Neo4j<br>Certification<br><span class="badge bg-success">Completed</span></small></br>
+            </a>
             
                         <a href="https://web.dio.me/track/bootcamp-blockchain-developer-with-solidity-2025" target="_blank" class="text-center text-decoration-none" data-bs-toggle="tooltip" title="Binance - Blockchain Developer (Bootcamp) - In progress">
               <img src="img/Binance - Blockchain Developer.webp" width="40" alt="Binance - Blockchain Developer"><br>
@@ -565,6 +684,48 @@
             </a>
 
             
+          </div>
+
+          <h6 class="fw-bold mb-2 text-center mt-3">Projects</h6>
+          <div class="accordion mb-3" id="projetosAccordion">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="projHeading">
+                <button class="accordion-button collapsed d-flex align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#projCollapse" aria-expanded="false" aria-controls="projCollapse">
+                  <div class="cert-btn-icons d-flex flex-wrap align-items-center" style="gap:8px;align-items:center;">
+                    <a href="https://myenglishbook.com/" target="_blank" class="d-inline-block" title="My English Book" style="padding:2px;">
+                      <img src="img/favicon-32x32.png" alt="My English Book" style="width:28px;height:28px;object-fit:contain;display:block">
+                    </a>
+                    <a href="https://ligg.site/intra2/pnop.php" target="_blank" class="d-inline-block" title="Ligg - Demo" style="padding:2px;">
+                      <img src="img/ligg-logo.png" alt="Ligg" style="width:28px;height:28px;object-fit:contain;display:block">
+                    </a>
+                    <a href="https://meisimples.site/" target="_blank" class="d-inline-block" title="MEI - simple" style="padding:2px;">
+                      <img src="img/meisimples.webp" alt="MEIsimples" style="width:28px;height:28px;object-fit:contain;display:block">
+                    </a>
+                  </div>
+                  <span class="cert-btn-text ms-2" style="display:none"></span>
+                </button>
+              </h2>
+              <div id="projCollapse" class="accordion-collapse collapse" data-bs-parent="#projetosAccordion">
+                <div class="accordion-body">
+                  <div class="cert-grid d-flex flex-wrap justify-content-center">
+                    <a href="https://myenglishbook.com/" id="proj-myeb" target="_blank" class="cert-item text-center text-decoration-none" data-bs-toggle="tooltip" data-bs-html="true" title="&lt;strong&gt;My English Book&lt;/strong&gt;&lt;br&gt;Website to teach English to native speakers in multiple languages for free, using verticalized AI.&lt;br&gt;&lt;strong&gt;Tech:&lt;/strong&gt; HTML, PHP, CSS, JS">
+                      <img src="img/logoMEB.png" alt="My English Book" style="width:112px;height:112px;object-fit:contain;display:block;margin:0 auto 12px;"><div class="caption">My English Book</div>
+                      <div class="hours"></div>
+                    </a>
+
+                    <a href="https://ligg.site/intra2/pnop.php" id="proj-ligg" target="_blank" class="cert-item text-center text-decoration-none" data-bs-toggle="tooltip" data-bs-html="true" title="&lt;strong&gt;Ligg - Demo&lt;/strong&gt;&lt;br&gt;Internal tool demo for data analysis, planning and visualization.&lt;br&gt;&lt;strong&gt;Tech:&lt;/strong&gt; HTML, PHP, CSS, JS">
+                      <img src="img/ligg-logo.png" alt="Ligg - Demo" style="width:112px;height:112px;object-fit:contain;display:block;margin:0 auto 12px;"><div class="caption">Ligg - Demo</div>
+                      <div class="hours"></div>
+                    </a>
+
+                    <a href="https://meisimples.site/" id="proj-meisimples" target="_blank" class="cert-item text-center text-decoration-none" data-bs-toggle="tooltip" data-bs-html="true" title="&lt;strong&gt;MEIsimples&lt;/strong&gt;&lt;br&gt;Platform for micro-entrepreneurs to track expenses, separate personal/business finances and monitor cash inflows.&lt;br&gt;&lt;strong&gt;Tech:&lt;/strong&gt; React, Supabase">
+                      <img src="img/meisimples.webp" alt="MEIsimples" style="width:112px;height:112px;object-fit:contain;display:block;margin:0 auto 12px;"><div class="caption">MEI - simple</div>
+                      <div class="hours"></div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -576,41 +737,42 @@
           <div class="accordion mb-4" id="experienciaAccordion">
             <div class="accordion-item">
               <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#exp1">
-                  <a href="https://advti-infor.com.br/site/" target="_blank" class="company-link me-2" onclick="event.stopPropagation()">ADM (NBS)</a>
+                <button class="accordion-button collapsed text-success fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#exp1">
+                  <a href="http://ligg.site/" target="_blank" class="company-link me-2" onclick="event.stopPropagation()">Ligg Contact Services</a>
                   <div class="header-left">
-                    <span class="role-title">Hardware Support Intern</span>
+                    <span class="role-title">BI Data Analysis Intern</span>
                   </div>
-                  <span class="duration text-muted small">1 year (2005)</span>
+                  <span class="duration text-success small">8 months<br><span class="fw-semibold small">Current</span></span>
                 </button>
               </h2>
               <div id="exp1" class="accordion-collapse collapse" data-bs-parent="#experienciaAccordion">
+                <div class="accordion-body text-success">
+                  <p>Support in Business Intelligence, performing analyses, dashboards and cross-referencing system data to generate insights and support strategic decisions in the collections area, with focus on <span class="hover-text">Data Visualization.<img src="img/visu.png" alt="Preview"></span></p>
+                  <p>Internally developed a web tool for monitoring, planning and preventive, predictive and prescriptive analysis, which complements collection actions — access: <a href="https://ligg.site/intra2/pnop.php" target="_blank" rel="noopener" class="company-link">Tool Demonstration</a>.</p>
+                </div>
+              </div>
+            </div>
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button collapsed text-success fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#exp2">
+                  <span class="company-link me-2">Freelance</span>
+                  <div class="header-left" style="width:100%;">
+                    <span class="fw-semibold role-title">Marketplaces Manager</span>
+                  </div>
+                  <span id="marketplace-duration" class="duration text-success small">&nbsp;</span>
+                </button>
+              </h2>
+              <div id="exp2" class="accordion-collapse collapse" data-bs-parent="#experienciaAccordion">
                 <div class="accordion-body">
-                  <p>Provided complete technical support and hardware maintenance, working from network configuration and monitoring to fault diagnosis and correction.</p>
-                  <p>Optimized infrastructure availability and performance, implemented preventive maintenance routines, coordinated equipment updates and documented procedures to reduce downtime and accelerate incident resolution.</p>
+                  <p>Act as a freelance professional managing sales operations on marketplaces (Shopee, Mercado Livre, Amazon and TikTok Shop), offering an end-to-end service from catalog preparation to commercial performance optimization.</p>
+                  <p>My responsibilities include creating and optimizing ads (titles, descriptions, images and attributes), pricing and inventory management, configuration and optimization of sponsored campaigns, continuous monitoring of KPIs (visits, conversion, cancellations, average ticket) and competition analysis to adjust positioning strategy.</p>
+                  <p>I also implemented automations to synchronize inventory and orders, established SLA processes for service and logistics, and delivered actionable reports to clients with tactical recommendations — all focused on increasing conversion, reducing rejections and scaling sales sustainably.</p>
                 </div>
               </div>
             </div>
             <div class="accordion-item">
               <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#exp3">
-                  <a href="https://www.pixsoft.com.br/" target="_blank" class="company-link me-2" onclick="event.stopPropagation()">Pix Soft (DeMillus)</a>
-                  <div class="header-left">
-                    <span class="role-title">Software Development Intern</span>
-                  </div>
-                  <span class="duration text-muted small">1 year (2006)</span>
-                </button>
-              </h2>
-              <div id="exp3" class="accordion-collapse collapse" data-bs-parent="#experienciaAccordion">
-                <div class="accordion-body">
-                  <p>Developed and maintained internal applications in VB integrated with SQL databases, creating optimized queries, procedures and automations that accelerated data extraction and processing for analysis.</p>
-                  <p>Delivered management reports and dashboards for board and management, translated business requirements into technical solutions, coordinated version updates and testing and implemented improvements that increased information reliability and decision-making agility.</p>
-                </div>
-              </div>
-            </div>
-            <div class="accordion-item">
-              <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#exp4">
                   <a href="https://central.dbtrans.com.br/" target="_blank" class="company-link me-2" onclick="event.stopPropagation()">DB Trans</a>
                   <div class="header-left">
                     <span class="role-title">Software Development Intern</span>
@@ -618,7 +780,7 @@
                   <span class="duration text-muted small">1 year (2007)</span>
                 </button>
               </h2>
-              <div id="exp4" class="accordion-collapse collapse" data-bs-parent="#experienciaAccordion">
+              <div id="exp3" class="accordion-collapse collapse" data-bs-parent="#experienciaAccordion">
                 <div class="accordion-body">
                   <p>Developed backend solutions in ASP.NET, implementing services and endpoints for integration with billing systems and XML-based flows, ensuring secure and reliable information exchange between platforms.</p>
                   <p>Modeled databases and optimized SQL queries, created XML file automation and transformation routines, and collaborated with operations to test and deploy updates that reduced processing failures and improved transaction traceability.</p>
@@ -640,23 +802,6 @@
                   <p>Act as a freelance professional managing sales operations on marketplaces (Shopee, Mercado Livre, Amazon and TikTok Shop), offering an end-to-end service from catalog preparation to commercial performance optimization.</p>
                   <p>My responsibilities include creating and optimizing ads (titles, descriptions, images and attributes), pricing and inventory management, configuration and optimization of sponsored campaigns, continuous monitoring of KPIs (visits, conversion, cancellations, average ticket) and competition analysis to adjust positioning strategy.</p>
                   <p>I also implemented automations to synchronize inventory and orders, established SLA processes for service and logistics, and delivered actionable reports to clients with tactical recommendations — all focused on increasing conversion, reducing rejections and scaling sales sustainably.</p>
-                </div>
-              </div>
-            </div>
-            <div class="accordion-item">
-              <h2 class="accordion-header">
-                <button class="accordion-button collapsed text-success fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#exp6">
-                  <a href="http://ligg.site/" target="_blank" class="company-link me-2" onclick="event.stopPropagation()">Ligg Contact Services</a>
-                  <div class="header-left">
-                    <span class="role-title">BI Data Analysis Intern</span>
-                  </div>
-                  <span class="duration text-success small">4 months<br><span class="fw-semibold small">Current</span></span>
-                </button>
-              </h2>
-              <div id="exp6" class="accordion-collapse collapse" data-bs-parent="#experienciaAccordion">
-                <div class="accordion-body text-success">
-                  <p>Support in Business Intelligence, performing analyses, dashboards and cross-referencing system data to generate insights and support strategic decisions in the collections area, with focus on <span class="hover-text">Data Visualization.<img src="img/visu.png" alt="Preview"></span></p>
-                  <p>Internally developed a web tool for monitoring, planning and preventive, predictive and prescriptive analysis, which complements collection actions — access: <a href="https://ligg.site/intra2/pnop.php" target="_blank" rel="noopener" class="company-link">Tool Demonstration</a>.</p>
                 </div>
               </div>
             </div>
@@ -696,6 +841,15 @@
       </filter>
     </defs>
   </svg>
+  <style>
+  @media (max-width: 767.98px) {
+    .cert-grid { display:flex; flex-wrap:wrap; }
+    .cert-grid .cert-item.cert-vitor { order: -9999; }
+    .cert-btn-icons a.cert-vitor { order: -9999; }
+    .order-main-mobile { order: -9999; }
+    .order-skills-mobile { order: 0; }
+  }
+  </style>
   <script>
     // Animate skill fills from 0 to their data-perc and add electric glow pulses.
     console.log('Electric bars script starting...');
@@ -851,8 +1005,11 @@
           {href:'img/HUO5JUNU.png', img:'img/dio.webp', alt:'DIO', short:'Data Analysis', hours:'104h', full:'Data analysis flow with tools like SQL, Excel with copilot, Azure Services and AI, applying practical projects with ETL, dashboards and machine learning. (104h, 2025)'},
           {href:'pdf/VITOR DE FREITAS MORAIS.pdf', img:'img/e18c7813-3115-4def-819f-0a277644516a.png', alt:'Inovação', short:'Design Thinking', hours:'180h', full:'Professional Qualification Course in Innovation and Design Thinking (180h, 2025)'},
           {href:'pdf/Estatística_conceitos_e_representações-Certificado_250728_153957[1].pdf', img:'img/44b8ca65-a423-406d-bc1a-7e77a59feaf0.png', alt:'Estatística', short:'Statistics', hours:'20h', full:'Statistics course: concepts and representations – IFRS (20h, 2025)'},
+          {href:'https://web.dio.me/track/neo4j-analise-de-dados-com-grafos', img:'img/Neo4J.webp', alt:'DIO Neo4j', short:'DIO Neo4j Graphs', hours:'51h', status:'In progress', full:'DIO track focused on Neo4j and graph-based data analysis. In progress.'},
+          {href:'https://graphacademy.neo4j.com/c/2815b84d-493b-4914-be4a-2819f6593b39/', img:'img/NEO4J.png', alt:'Neo4J', short:'Neo4J Certification', hours:'Completed', full:'Official Neo4j certification completed on GraphAcademy.'},
           {href:'https://web.dio.me/track/bootcamp-blockchain-developer-with-solidity-2025', img:'img/Binance - Blockchain Developer.webp', alt:'Binance', short:'Blockchain', hours:'In progress', full:'Binance - Blockchain Developer (Bootcamp) - In progress'}
         ];
+        certs.reverse();
 
         // build accordion
         var acc = document.createElement('div'); acc.className = 'accordion mb-3'; acc.id = 'certAccordion';
@@ -872,7 +1029,8 @@
         iconsContainer.style.gap = '6px';
         certs.forEach(function(c){
           var a = document.createElement('a'); a.href = c.href; a.target = '_blank'; a.className = 'd-inline-block'; a.setAttribute('title', c.short + ' — ' + c.hours);
-          var img = document.createElement('img'); img.src = c.img; img.alt = c.alt; img.style.width = '20px'; img.style.height = '20px'; img.style.objectFit = 'cover'; img.style.display = 'block';
+          if(c.href && c.href.toUpperCase().indexOf('VITOR') !== -1) a.classList.add('cert-vitor');
+          var img = document.createElement('img'); img.src = c.img; img.alt = c.alt; img.style.width = '20px'; img.style.height = '20px'; img.style.objectFit = 'contain'; img.style.display = 'block';
           a.appendChild(img);
           iconsContainer.appendChild(a);
         });
@@ -893,12 +1051,21 @@
         var detailedGrid = document.createElement('div'); detailedGrid.className = 'cert-grid d-flex flex-wrap justify-content-center';
         certs.forEach(function(c){
           var a = document.createElement('a'); a.href = c.href; a.target = '_blank'; a.className = 'cert-item text-center text-decoration-none';
+          if(c.href && c.href.toUpperCase().indexOf('VITOR') !== -1) a.classList.add('cert-vitor');
           // tooltip with full details (html)
           a.setAttribute('data-bs-toggle','tooltip');
           a.setAttribute('data-bs-html','true');
           a.setAttribute('title', '<strong>' + (c.full || '') + '</strong>');
           var img = document.createElement('img'); img.src = c.img; img.alt = c.alt; img.style.width = '32px'; img.style.height = '32px'; img.style.display='block'; img.style.margin='0 auto 6px';
           var cap = document.createElement('div'); cap.className = 'caption'; cap.innerHTML = (c.short + '<br>');
+          if(c.status){
+            var badge = document.createElement('span');
+            badge.className = 'badge bg-warning text-dark small';
+            badge.style.display = 'inline-block';
+            badge.style.marginTop = '4px';
+            badge.textContent = c.status;
+            cap.appendChild(badge);
+          }
           var hrs = document.createElement('div'); hrs.className = 'hours'; hrs.textContent = c.hours; hrs.style.color = '#1db954'; hrs.style.fontWeight = '700'; hrs.style.fontSize = '0.8rem';
           a.appendChild(img); a.appendChild(cap); a.appendChild(hrs); detailedGrid.appendChild(a);
         });
@@ -939,6 +1106,29 @@
         }
       }catch(e){ console.error('calc marketplace years', e); }
     })();
+  </script>
+  <script>
+    // Hover/focus effect: when hovering the English certificate, add glow to the 'English' skill label
+    document.addEventListener('DOMContentLoaded', function(){
+      try{
+        var cert = document.getElementById('cert-ingles');
+        var skill = document.getElementById('skill-ingles');
+        if(!cert || !skill) return;
+
+        function addGlow(){
+          skill.classList.add('glow');
+          skill.classList.add('pulse');
+          setTimeout(function(){ skill.classList.remove('pulse'); }, 1100);
+        }
+        function removeGlow(){ skill.classList.remove('glow'); skill.classList.remove('pulse'); }
+
+        cert.addEventListener('mouseenter', addGlow);
+        cert.addEventListener('mouseleave', removeGlow);
+        cert.addEventListener('focus', addGlow);
+        cert.addEventListener('blur', removeGlow);
+        cert.addEventListener('keydown', function(e){ if(e.key === 'Enter'){ addGlow(); setTimeout(removeGlow, 1200); } });
+      }catch(e){ console.error('english glow init', e); }
+    });
   </script>
 </body>
 </html>

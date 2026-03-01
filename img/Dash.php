@@ -105,10 +105,12 @@
             padding: 8px;
             font-size: 16px;
             /* Remove setinhas do input number */
+            appearance: textfield;
             -moz-appearance: textfield;
         }
         .controls input[type="number"]::-webkit-outer-spin-button,
         .controls input[type="number"]::-webkit-inner-spin-button {
+            appearance: none;
             -webkit-appearance: none;
             margin: 0;
         }
